@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -132,7 +131,7 @@ th{color:#bca9d6;background:#1c1628}td{color:#e9e1f2}
   <div class="nav-title">المنصة</div>
   <nav class="nav">
    <button class="active" onclick="go('home',this)">⌂ الرئيسية</button>
-   <button onclick="go('archive',this)">▤ أرشيف الأخطاء</button>
+   <button id="adminArchiveNav" class="hidden" onclick="go('archive',this)">▤ أرشيف الأخطاء</button>
    <button onclick="go('report',this)">＋ إضافة بلاغ</button>
    <button onclick="go('mine',this)">▣ بلاغاتي</button>
    <button onclick="go('encyclopedia',this)">📚 الموسوعة البرمجية</button>
@@ -141,9 +140,9 @@ th{color:#bca9d6;background:#1c1628}td{color:#e9e1f2}
    <button onclick="go('certificates',this)">🏆 شهاداتي</button>
    <button onclick="go('account',this)">♙ حسابي</button>
   </nav>
-  <div class="nav-title">الإدارة</div>
+  <div class="nav-title hidden" id="adminNavTitle">الإدارة</div>
   <nav class="nav">
-   <button id="adminNav" onclick="go('admin',this)">⚙ لوحة المشرف</button>
+   <button id="adminNav" class="hidden" onclick="go('admin',this)">⚙ لوحة المشرف</button>
    <button onclick="logout()">↪ تسجيل الخروج</button>
   </nav>
  </aside>
@@ -161,8 +160,8 @@ th{color:#bca9d6;background:#1c1628}td{color:#e9e1f2}
     <button class="btn" onclick="go('encyclopedia')">استكشف الموسوعة</button>
     <button class="btn secondary" onclick="go('courses')">اكتشف الدورات</button>
    </div>
-   <div class="stats" id="stats"></div>
-   <div class="section-head"><h3>أحدث البلاغات</h3><button class="btn secondary small" onclick="go('archive')">عرض الكل</button></div>
+   <div class="stats hidden" id="stats"></div>
+   <div class="section-head hidden" id="latestReportsHead"><h3>أحدث البلاغات</h3><button class="btn secondary small" onclick="go('archive')">عرض الكل</button></div>
    <div class="grid" id="latest"></div>
    <div class="section-head"><h3>أقسام المنصة</h3></div>
    <div class="grid">
@@ -335,25 +334,61 @@ function register(){
  $('loginUser').value=username;$('loginPass').value=password;authMode('login');
  $('authMessage').textContent='تم إنشاء الحساب. يمكنك تسجيل الدخول.';
 }
+
 function startApp(){
  if(!me()){logout();return}
- $('auth').classList.add('hidden');$('app').classList.remove('hidden');
- $('userChip').textContent=me().name+(isAdmin()?' · مشرف':'');
- $('adminNav').classList.toggle('hidden',!isAdmin());
- updateAll();go('home');
+ const admin=isAdmin();
+
+ $('auth').classList.add('hidden');
+ $('app').classList.remove('hidden');
+
+ $('userChip').textContent=me().name+(admin?' · مشرف':'');
+ $('adminNav').classList.toggle('hidden',!admin);
+ $('adminNavTitle').classList.toggle('hidden',!admin);
+ $('adminArchiveNav').classList.toggle('hidden',!admin);
+
+ $('stats').classList.toggle('hidden',!admin);
+ $('latestReportsHead').classList.toggle('hidden',!admin);
+ $('latest').classList.toggle('hidden',!admin);
+
+ updateAll();
+ go('home');
 }
+
 function logout(){
  current=null;localStorage.removeItem('bv_current');
  $('app').classList.add('hidden');$('auth').classList.remove('hidden');authMode('login');
 }
+
 const titles={home:'الرئيسية',archive:'أرشيف الأخطاء',report:'إضافة بلاغ',mine:'بلاغاتي',encyclopedia:'الموسوعة البرمجية',encyDetail:'تفاصيل الموضوع',courses:'الدورات التدريبية',myCourses:'دوراتي',courseDetail:'تفاصيل الدورة',certificates:'شهاداتي',certificateView:'عرض الشهادة',details:'تفاصيل البلاغ',account:'حسابي',admin:'لوحة المشرف'};
+
 function go(page,button){
- if(page==='admin'&&!isAdmin()){alert('هذه الصفحة للمشرف فقط');return}
+ if(!me()){logout();return}
+
+ if((page==='admin'||page==='archive')&&!isAdmin()){
+  alert('هذه الصفحة للمشرف فقط');
+  return;
+ }
+
+ if(page==='details'){
+  alert('افتح تفاصيل البلاغ من قائمة بلاغاتك.');
+  return;
+ }
+
+ const allowed=['home','report','mine','encyclopedia','encyDetail','courses','myCourses','courseDetail','certificates','certificateView','details','account','admin','archive'];
+ if(!allowed.includes(page))return;
+
+ if(page==='admin'&&!isAdmin())return;
+ if(page==='archive'&&!isAdmin())return;
+
  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
  $(page).classList.add('active');
+
  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
  if(button)button.classList.add('active');
+
  $('pageTitle').textContent=titles[page]||'BugVault';
+
  if(page==='archive')renderArchive();
  if(page==='mine')renderMine();
  if(page==='encyclopedia')renderEncyclopedia();
@@ -363,57 +398,104 @@ function go(page,button){
  if(page==='admin')renderAdmin();
  if(page==='account')renderAccount();
 }
+
 function statusClass(s){return s==='تم الحل'?'done':s==='لم يتم الحل'?'rejected':''}
 function statusBadge(s){return `<span class="status ${statusClass(s)}">${escapeHTML(s)}</span>`}
 function stat(icon,label,value){return `<div class="stat"><div>${icon}</div><small>${label}</small><strong>${value}</strong></div>`}
+
 function updateAll(){
  if(!me())return;
- const done=reports.filter(r=>r.status==='تم الحل').length;
- const pending=reports.filter(r=>r.status==='قيد المراجعة').length;
- const enrolled=courses.reduce((n,c)=>n+c.enrollments.length,0);
- $('stats').innerHTML=stat('🐛','البلاغات',reports.length)+stat('✅','تم الحل',done)+stat('⏳','قيد المراجعة',pending)+stat('🎓','تسجيلات الدورات',enrolled);
- $('latest').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).slice(0,4).map(reportCard).join('');
+
+ if(isAdmin()){
+  const done=reports.filter(r=>r.status==='تم الحل').length;
+  const pending=reports.filter(r=>r.status==='قيد المراجعة').length;
+  const enrolled=courses.reduce((n,c)=>n+c.enrollments.length,0);
+
+  $('stats').innerHTML=stat('🐛','البلاغات',reports.length)+stat('✅','تم الحل',done)+stat('⏳','قيد المراجعة',pending)+stat('🎓','تسجيلات الدورات',enrolled);
+  $('latest').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).slice(0,4).map(reportCard).join('');
+ }else{
+  $('stats').innerHTML='';
+  $('latest').innerHTML='';
+ }
 }
+
 function reportCard(r){
  return `<article class="report-card"><div class="report-top"><span class="number">${escapeHTML(r.number)}</span>${statusBadge(r.status)}</div>
  <h3>${escapeHTML(r.title)}</h3><p>${escapeHTML(r.description)}</p>
  <div class="meta"><span>${escapeHTML(r.category)}</span><span>${escapeHTML(r.date)}</span></div>
  <button class="btn small" onclick="details(${r.id})">عرض التفاصيل</button></article>`;
 }
+
 function renderArchive(){
+ if(!isAdmin())return;
+
  const q=$('search').value.trim().toLowerCase(),s=$('filterStatus').value;
  const list=reports.filter(r=>(!s||r.status===s)&&(!q||[r.number,r.title,r.category,r.description].join(' ').toLowerCase().includes(q))).sort((a,b)=>b.id-a.id);
+
  $('archiveCount').textContent=list.length+' بلاغ';
  $('archiveList').innerHTML=list.length?list.map(reportCard).join(''):'<div class="empty">لا توجد بلاغات مطابقة.</div>';
 }
+
 function addReport(){
  const title=$('newTitle').value.trim(),category=$('newCategory').value,description=$('newDesc').value.trim(),solution=$('newSolution').value.trim();
+
  if(!title||!description){$('reportMessage').textContent='يرجى كتابة العنوان والوصف.';return}
+
  const id=nextNumber++,u=me();
  reports.push({id,number:'BV-'+id,title,category,description,solution,status:'قيد المراجعة',author:u.username,authorName:u.name,date:new Date().toLocaleDateString('ar-SA')});
- persist();updateAll();$('newTitle').value='';$('newDesc').value='';$('newSolution').value='';
+
+ persist();updateAll();
+ $('newTitle').value='';$('newDesc').value='';$('newSolution').value='';
  $('reportMessage').textContent='تم إرسال البلاغ بنجاح. رقم البلاغ: BV-'+id;
 }
+
 function renderMine(){
  const list=reports.filter(r=>r.author===me().username).sort((a,b)=>b.id-a.id);
  $('myReports').innerHTML=list.length?list.map(reportCard).join(''):'<div class="empty">لم تقم بإضافة أي بلاغ حتى الآن.</div>';
 }
+
 function details(id){
- const r=reports.find(x=>x.id===id);if(!r)return;
- $('detailContent').innerHTML=`<div class="number">${r.number}</div><h2>${escapeHTML(r.title)}</h2>
+ const r=reports.find(x=>x.id===id);
+ if(!r)return;
+
+ if(!isAdmin()&&r.author!==me().username){
+  alert('لا يمكنك الاطلاع على بلاغ مستخدم آخر.');
+  return;
+ }
+
+ $('detailContent').innerHTML=`<div class="number">${escapeHTML(r.number)}</div><h2>${escapeHTML(r.title)}</h2>
  <div class="meta"><span>${escapeHTML(r.category)}</span><span>${escapeHTML(r.date)}</span></div>
  ${statusBadge(r.status)}<hr><h4>وصف المشكلة</h4><p class="muted">${escapeHTML(r.description)}</p>
  <h4>الحل المقترح</h4><p class="muted">${escapeHTML(r.solution||'لا يوجد حل مقترح.')}</p>
  <p class="muted">صاحب البلاغ: ${escapeHTML(r.authorName)}</p>
  ${isAdmin()?`<div class="field"><label>تغيير الحالة</label><select id="detailStatus"><option ${r.status==='قيد المراجعة'?'selected':''}>قيد المراجعة</option><option ${r.status==='تم الحل'?'selected':''}>تم الحل</option><option ${r.status==='لم يتم الحل'?'selected':''}>لم يتم الحل</option></select></div>
  <button class="btn" onclick="updateStatus(${r.id})">حفظ الحالة</button><button class="btn danger" onclick="deleteReport(${r.id})">حذف البلاغ</button>`:''}
- <button class="btn secondary" onclick="go('archive')">العودة للأرشيف</button>`;
- go('details');
+ <button class="btn secondary" onclick="go('${isAdmin()?'archive':'mine'}')">العودة</button>`;
+
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ $('details').classList.add('active');
+ $('pageTitle').textContent='تفاصيل البلاغ';
 }
-function updateStatus(id){if(!isAdmin())return;const r=reports.find(x=>x.id===id);if(!r)return;r.status=$('detailStatus').value;persist();updateAll();details(id)}
-function deleteReport(id){if(!isAdmin()||!confirm('هل تريد حذف البلاغ؟'))return;reports=reports.filter(r=>r.id!==id);persist();updateAll();go('admin')}
+
+function updateStatus(id){
+ if(!isAdmin())return;
+ const r=reports.find(x=>x.id===id);
+ if(!r)return;
+ r.status=$('detailStatus').value;
+ persist();updateAll();details(id);
+}
+
+function deleteReport(id){
+ if(!isAdmin()||!confirm('هل تريد حذف البلاغ؟'))return;
+ reports=reports.filter(r=>r.id!==id);
+ persist();updateAll();go('admin');
+}
+
 function renderAccount(){
- const u=me();$('accountName').textContent=u.name;$('accountUser').textContent=u.username;$('accountRole').textContent=u.role==='admin'?'مشرف':'مستخدم';
+ const u=me();
+ $('accountName').textContent=u.name;
+ $('accountUser').textContent=u.username;
+ $('accountRole').textContent=u.role==='admin'?'مشرف':'مستخدم';
 }
 
 /* الموسوعة */
@@ -433,13 +515,16 @@ const encyclopedia=[
 {id:13,title:'خطأ IndentationError',lang:'أخطاء برمجية',desc:'يظهر في Python عند وجود مشكلة في المسافات البادئة.',ex:'if True:\nprint("Hello")',explain:'يجب وضع مسافة بادئة قبل أمر الطباعة.',problem:'IndentationError',solution:'استخدم مسافات بادئة متناسقة.'},
 {id:14,title:'خطأ 404',lang:'أخطاء برمجية',desc:'يشير إلى أن الصفحة أو المورد المطلوب غير موجود على الخادم.',ex:'HTTP Status: 404 Not Found',explain:'الخادم لم يعثر على المورد المطلوب.',problem:'404 Not Found',solution:'راجع عنوان الصفحة ومسار الملف.'}
 ];
+
 function renderEncyclopedia(){
  const q=$('encySearch').value.trim().toLowerCase(),f=$('encyFilter').value;
  const list=encyclopedia.filter(x=>(!f||x.lang===f)&&(!q||[x.title,x.lang,x.desc,x.problem].join(' ').toLowerCase().includes(q)));
  $('encyList').innerHTML=list.length?list.map(x=>`<article class="item-card"><span class="pill">${escapeHTML(x.lang)}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.desc)}</p><button class="btn small" onclick="encyDetails(${x.id})">اقرأ الشرح</button></article>`).join(''):'<div class="empty">لا توجد نتائج مطابقة.</div>';
 }
+
 function encyDetails(id){
- const x=encyclopedia.find(v=>v.id===id);if(!x)return;
+ const x=encyclopedia.find(v=>v.id===id);
+ if(!x)return;
  $('encyDetailContent').innerHTML=`<span class="pill">${escapeHTML(x.lang)}</span><h2>${escapeHTML(x.title)}</h2><p class="muted">${escapeHTML(x.desc)}</p><hr>
  <h3>مثال برمجي</h3><pre class="codebox">${escapeHTML(x.ex)}</pre>
  <h3>شرح المثال</h3><div class="detail-box">${escapeHTML(x.explain)}</div>
@@ -450,6 +535,7 @@ function encyDetails(id){
 
 /* الدورات */
 function enrolled(c){return c.enrollments.some(e=>e.username===me().username)}
+
 function renderCourses(){
  const q=$('courseSearch').value.trim().toLowerCase();
  const list=courses.filter(c=>(c.title+' '+c.description+' '+c.level).toLowerCase().includes(q));
@@ -462,8 +548,10 @@ function renderCourses(){
  <button class="btn small" onclick="courseDetails(${c.id})">تفاصيل الدورة</button></article>`;
  }).join(''):'<div class="empty">لا توجد دورات مطابقة.</div>';
 }
+
 function courseDetails(id){
- const c=courses.find(x=>x.id===id);if(!c)return;
+ const c=courses.find(x=>x.id===id);
+ if(!c)return;
  const full=c.enrollments.length>=c.seats,joined=enrolled(c);
  $('courseDetailContent').innerHTML=`<span class="pill">${escapeHTML(c.level)}</span><h2>${escapeHTML(c.title)}</h2><p class="muted">${escapeHTML(c.description)}</p><hr>
  <p>📅 تاريخ الدورة: <strong>${escapeHTML(c.date||'يحدد لاحقًا')}</strong></p><p>⏱ المدة: <strong>${escapeHTML(c.duration)}</strong></p>
@@ -473,21 +561,26 @@ function courseDetails(id){
  <button class="btn secondary" onclick="go('courses')">العودة للدورات</button>`;
  go('courseDetail');
 }
+
 function enroll(id){
- const c=courses.find(x=>x.id===id);if(!c)return;
+ const c=courses.find(x=>x.id===id);
+ if(!c)return;
  if(enrolled(c)){alert('أنت مسجل بالفعل');return}
  if(c.enrollments.length>=c.seats){alert('اكتملت المقاعد');return}
  c.enrollments.push({username:me().username,name:me().name,attended:false,completed:false,certificateNo:null,issueDate:null});
  persist();updateAll();courseDetails(id);alert('تم تسجيلك في الدورة بنجاح!');
 }
+
 function cancelEnrollment(id){
- const c=courses.find(x=>x.id===id);if(!c)return;
+ const c=courses.find(x=>x.id===id);
+ if(!c)return;
  const e=c.enrollments.find(x=>x.username===me().username);
  if(e?.completed){alert('لا يمكن إلغاء التسجيل بعد إصدار الشهادة.');return}
  if(!confirm('هل تريد إلغاء تسجيلك؟'))return;
  c.enrollments=c.enrollments.filter(x=>x.username!==me().username);
  persist();updateAll();courseDetails(id);
 }
+
 function renderMyCourses(){
  const list=courses.filter(c=>enrolled(c));
  $('myCourseList').innerHTML=list.length?list.map(c=>{
@@ -513,8 +606,10 @@ function renderCertificates(){
  <div style="margin-top:12px"><button class="btn" onclick="viewCertificate(${x.course.id})">عرض الشهادة</button></div>
  </article>`).join(''):'<div class="empty">لا توجد شهادات حتى الآن. أكمل دورة واحضرها وانتظر اعتماد المشرف.</div>';
 }
+
 function viewCertificate(courseId){
- const c=courses.find(x=>x.id===courseId);if(!c)return;
+ const c=courses.find(x=>x.id===courseId);
+ if(!c)return;
  const e=c.enrollments.find(x=>x.username===me().username&&x.completed&&x.certificateNo);
  if(!e){alert('لا توجد شهادة لهذه الدورة.');return}
  $('printArea').innerHTML=`<div class="certificate">
@@ -539,54 +634,76 @@ function viewCertificate(courseId){
 /* لوحة المشرف */
 function renderAdmin(){
  if(!isAdmin())return;
+
  const done=reports.filter(r=>r.status==='تم الحل').length;
  const pending=reports.filter(r=>r.status==='قيد المراجعة').length;
  const enrolledCount=courses.reduce((n,c)=>n+c.enrollments.length,0);
  const certCount=courses.reduce((n,c)=>n+c.enrollments.filter(e=>e.completed).length,0);
+
  $('adminStats').innerHTML=stat('📚','البلاغات',reports.length)+stat('✅','تم الحل',done)+stat('🎓','التسجيلات',enrolledCount)+stat('🏆','الشهادات',certCount);
- $('adminTable').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).map(r=>`<tr><td class="number">${r.number}</td><td>${escapeHTML(r.title)}</td><td>${escapeHTML(r.authorName)}</td><td>${statusBadge(r.status)}</td><td><button class="btn small" onclick="details(${r.id})">تفاصيل</button><button class="btn danger small" onclick="deleteReport(${r.id})">حذف</button></td></tr>`).join('');
+
+ $('adminTable').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).map(r=>`<tr><td class="number">${escapeHTML(r.number)}</td><td>${escapeHTML(r.title)}</td><td>${escapeHTML(r.authorName)}</td><td>${statusBadge(r.status)}</td><td><button class="btn small" onclick="details(${r.id})">تفاصيل</button><button class="btn danger small" onclick="deleteReport(${r.id})">حذف</button></td></tr>`).join('');
+
  $('adminCourses').innerHTML=courses.map(c=>`<tr><td>${escapeHTML(c.title)}</td><td>${escapeHTML(c.date||'—')}</td><td>${c.enrollments.length} / ${c.seats}</td><td><button class="btn small" onclick="adminCourse(${c.id})">المشاركون</button><button class="btn danger small" onclick="deleteCourse(${c.id})">حذف</button></td></tr>`).join('');
 }
+
 function addCourse(){
  if(!isAdmin())return;
+
  const title=$('courseTitle').value.trim(),description=$('courseDesc').value.trim(),date=$('courseDate').value,duration=$('courseDuration').value.trim(),seats=Number($('courseSeats').value),level=$('courseLevel').value;
+
  if(!title||!description||!date||!duration||!seats||seats<1){$('courseMessage').textContent='يرجى تعبئة جميع بيانات الدورة.';return}
+
  courses.push({id:Date.now(),title,description,date,duration,seats,level,status:'متاحة',enrollments:[]});
  persist();updateAll();renderAdmin();
+
  $('courseTitle').value='';$('courseDesc').value='';$('courseDate').value='';$('courseDuration').value='';$('courseSeats').value=20;
  $('courseMessage').textContent='تمت إضافة الدورة بنجاح.';
 }
+
 function adminCourse(id){
  if(!isAdmin())return;
- const c=courses.find(x=>x.id===id);if(!c)return;
+ const c=courses.find(x=>x.id===id);
+ if(!c)return;
+
  const rows=c.enrollments.map(e=>{
  const user=encodeURIComponent(e.username);
  let action='';
+
  if(e.completed)action='<span class="status done">اكتملت وصُدرت الشهادة</span>';
  else if(e.attended)action=`<button class="btn success small" onclick="completeCourse(${id},'${user}')">اعتماد الإتمام وإصدار الشهادة</button>`;
  else action='<span class="status">بانتظار تسجيل الحضور</span>';
+
  return `<tr><td>${escapeHTML(e.name)}</td><td>${escapeHTML(e.username)}</td>
  <td>${e.attended?'<span class="status done">حاضر</span>':'<span class="status">لم يحضر</span>'}</td>
  <td><button class="btn small ${e.attended?'secondary':'success'}" onclick="toggleAttendance(${id},'${user}')">${e.attended?'إلغاء الحضور':'تسجيل الحضور'}</button></td>
  <td>${action}</td></tr>`;
  }).join('');
+
  $('attendanceArea').innerHTML=`<div class="card"><h3>${escapeHTML(c.title)}</h3><p class="muted">عدد المسجلين: ${c.enrollments.length}</p>
  <div class="table-wrap"><table><thead><tr><th>الاسم</th><th>المستخدم</th><th>الحضور</th><th>تغيير الحضور</th><th>إتمام الدورة</th></tr></thead>
  <tbody>${rows||'<tr><td colspan="5">لا يوجد مسجلون في هذه الدورة.</td></tr>'}</tbody></table></div></div>`;
+
  $('attendanceArea').scrollIntoView({behavior:'smooth',block:'start'});
 }
+
 function toggleAttendance(id,encodedUser){
  if(!isAdmin())return;
- const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);if(!c)return;
- const e=c.enrollments.find(x=>x.username===username);if(!e)return;
+ const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);
+ if(!c)return;
+ const e=c.enrollments.find(x=>x.username===username);
+ if(!e)return;
  if(e.completed&&!e.attended){alert('لا يمكن تغيير الحضور بعد إصدار الشهادة.');return}
  e.attended=!e.attended;
  persist();updateAll();renderAdmin();adminCourse(id);
 }
+
 function completeCourse(id,encodedUser){
  if(!isAdmin())return;
- const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);if(!c)return;
- const e=c.enrollments.find(x=>x.username===username);if(!e)return;
+ const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);
+ if(!c)return;
+ const e=c.enrollments.find(x=>x.username===username);
+ if(!e)return;
  if(!e.attended){alert('يجب تسجيل الحضور أولًا.');return}
  if(e.completed){alert('تم اعتماد إتمام هذه الدورة مسبقًا.');return}
  e.completed=true;
@@ -595,12 +712,18 @@ function completeCourse(id,encodedUser){
  persist();updateAll();renderAdmin();adminCourse(id);
  alert('تم اعتماد إتمام الدورة وإصدار الشهادة بنجاح!');
 }
+
 function deleteCourse(id){
  if(!isAdmin()||!confirm('هل تريد حذف هذه الدورة وجميع تسجيلاتها؟'))return;
- courses=courses.filter(c=>c.id!==id);persist();updateAll();renderAdmin();
+ courses=courses.filter(c=>c.id!==id);
+ persist();updateAll();renderAdmin();
 }
+
 if(current&&me())startApp();
-else{$('auth').classList.remove('hidden');$('app').classList.add('hidden');}
+else{
+ $('auth').classList.remove('hidden');
+ $('app').classList.add('hidden');
+}
 </script>
 </body>
 </html>
