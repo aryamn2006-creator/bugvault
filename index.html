@@ -7,723 +7,253 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
 :root{--bg:#0b0912;--panel:#15111f;--purple:#9562fa;--text:#f7f2ff;--muted:#a99bbd;--border:#332743;--green:#35c995;--red:#ff647c;--yellow:#f4bd55}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .sidebar{position:fixed;right:0;top:0;bottom:0;width:240px;background:#100d18;border-left:1px solid var(--border);padding:22px 15px;z-index:5;overflow-y:auto}
-.logo{font-size:24px;font-weight:800;margin:0 8px}.logo span{color:var(--purple)}
-.tagline{font-size:12px;color:var(--muted);margin:0 8px 25px}
-.nav-title{font-size:11px;color:#776b89;margin:19px 10px 7px}
-.nav button{display:block;width:100%;text-align:right;padding:10px 12px;margin:4px 0;border:0;border-radius:10px;background:transparent;color:#c3b8d0;font-size:13px}
-.nav button.active,.nav button:hover{background:#2a1e40;color:white}
-.nav button.active{border-right:3px solid var(--purple)}
-.main{margin-right:240px;padding:25px 30px;max-width:1550px}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:10px}
-.topbar h2{margin:0;font-size:21px}
-.user-chip{background:var(--panel);border:1px solid var(--border);padding:8px 12px;border-radius:11px;color:var(--muted);font-size:12px}
-.page{display:none}.page.active{display:block}
-.hero{padding:27px;border:1px solid #44315e;border-radius:18px;background:linear-gradient(120deg,#2a1b43,#151020);margin-bottom:20px}
-.hero h1{font-size:26px;margin:0 0 7px}.hero p{color:#c3b5d5;margin:0 0 17px;font-size:14px}
-.btn{border:0;border-radius:10px;padding:10px 16px;background:var(--purple);color:white;font-weight:700}
-.btn:hover{filter:brightness(1.12)}
-.btn.secondary{background:#292135;border:1px solid var(--border);color:#eee5fb}
-.btn.danger{background:#572331;color:#ffc0c9}
-.btn.success{background:#174d3e;color:#a5f2d7}
-.btn.small{padding:6px 10px;font-size:12px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:18px 0}
-.stat,.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px}
-.stat strong{display:block;font-size:26px;margin:5px 0}.stat small{color:var(--muted)}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px;gap:10px}
-.section-head h3{margin:0}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.report-card,.item-card{background:var(--panel);border:1px solid var(--border);padding:16px;border-radius:14px}
-.report-card h3,.item-card h3{font-size:16px;margin:9px 0}
-.report-card p,.item-card p{font-size:13px;color:var(--muted);line-height:1.9}
-.report-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.number{color:#bd9cff;font-size:12px;font-weight:800;direction:ltr}
-.tag,.pill{font-size:11px;border-radius:20px;padding:5px 9px;background:#302340;color:#d8c5ff}
-.status{font-size:11px;padding:5px 9px;border-radius:20px;background:#44351b;color:var(--yellow)}
-.status.done{background:#153b31;color:var(--green)}
-.status.rejected{background:#48202b;color:#ff91a3}
-.meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;margin:12px 0}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.field{margin:13px 0}
-.field label{display:block;font-size:13px;margin-bottom:6px;color:#d8cce6}
-input,textarea,select{width:100%;background:#100d18;border:1px solid var(--border);border-radius:10px;padding:11px;color:white;outline:none}
-input:focus,textarea:focus,select:focus{border-color:var(--purple)}
-textarea{min-height:100px;resize:vertical}
-select option{background:#171220}
-.form-card{max-width:760px}
-.table-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--border);border-radius:14px}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{padding:12px;text-align:right;border-bottom:1px solid var(--border);font-size:12px}
-th{color:#bca9d6;background:#1c1628}td{color:#e9e1f2}
-.muted{color:var(--muted)}
-.empty{text-align:center;padding:30px;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:14px}
-.auth{min-height:100vh;display:grid;place-items:center;padding:20px}
-.auth-box{width:min(440px,100%);background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:27px}
-.auth-box p{color:var(--muted);font-size:13px}
-.auth-tabs{display:flex;gap:8px;margin:18px 0}.auth-tabs button{flex:1}
-.codebox{direction:ltr;text-align:left;white-space:pre-wrap;background:#0b0912;border:1px solid var(--border);padding:14px;border-radius:10px;color:#c8aaff;font-family:monospace;font-size:13px;line-height:1.8;overflow:auto}
-.detail-box{background:#100d18;padding:14px;border:1px solid var(--border);border-radius:11px;line-height:1.9;font-size:13px}
-.certificate{background:#fff;color:#29203b;padding:34px;border:9px double #a17be5;border-radius:8px;text-align:center;max-width:850px;margin:15px auto}
-.certificate .cert-logo{font-size:22px;font-weight:800;color:#7045bb}
-.certificate h1{font-size:32px;color:#7045bb;margin:20px 0}
-.certificate .cert-name{font-size:27px;font-weight:800;margin:16px 0;color:#32234c}
-.certificate p{color:#514663;line-height:2}
-.cert-number{font-size:12px;color:#7256a1;direction:ltr}
-.cert-footer{display:flex;justify-content:space-between;margin-top:35px;gap:20px}
-.cert-footer div{border-top:1px solid #b6a4d3;padding:8px 15px;font-size:12px}
-@media(max-width:850px){
- .sidebar{position:relative;width:100%;height:auto;bottom:auto;padding:12px}
- .tagline,.nav-title{display:none}
- .nav{display:flex;overflow-x:auto;gap:4px}
- .nav button{white-space:nowrap;width:auto;padding:9px;font-size:12px}
- .main{margin:0;padding:16px}
- .stats{grid-template-columns:repeat(2,1fr)}
- .grid{grid-template-columns:1fr}
- .topbar h2{font-size:18px}
-}
-@media print{
- body{background:white!important}
- body *{visibility:hidden!important}
- #printArea,#printArea *{visibility:visible!important}
- #printArea{position:absolute;top:0;left:0;width:100%;margin:0;padding:20px}
- .certificate{margin:0 auto;max-width:none;min-height:500px}
- .no-print{display:none!important}
-}
+.logo{font-size:24px;font-weight:800;margin:0 8px}.logo span{color:var(--purple)}.tagline{font-size:12px;color:var(--muted);margin:0 8px 25px}.nav-title{font-size:11px;color:#776b89;margin:19px 10px 7px}
+.nav button{display:block;width:100%;text-align:right;padding:10px 12px;margin:4px 0;border:0;border-radius:10px;background:transparent;color:#c3b8d0;font-size:13px}.nav button.active,.nav button:hover{background:#2a1e40;color:white}.nav button.active{border-right:3px solid var(--purple)}
+.main{margin-right:240px;padding:25px 30px;max-width:1550px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:10px}.topbar h2{margin:0;font-size:21px}.user-chip{background:var(--panel);border:1px solid var(--border);padding:8px 12px;border-radius:11px;color:var(--muted);font-size:12px}
+.page{display:none}.page.active{display:block}.hero{padding:27px;border:1px solid #44315e;border-radius:18px;background:linear-gradient(120deg,#2a1b43,#151020);margin-bottom:20px}.hero h1{font-size:26px;margin:0 0 7px}.hero p{color:#c3b5d5;margin:0 0 17px;font-size:14px}
+.btn{border:0;border-radius:10px;padding:10px 16px;background:var(--purple);color:white;font-weight:700}.btn:hover{filter:brightness(1.12)}.btn.secondary{background:#292135;border:1px solid var(--border);color:#eee5fb}.btn.danger{background:#572331;color:#ffc0c9}.btn.success{background:#174d3e;color:#a5f2d7}.btn.small{padding:6px 10px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:18px 0}.stat,.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px}.stat strong{display:block;font-size:26px;margin:5px 0}.stat small{color:var(--muted)}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px;gap:10px}.section-head h3{margin:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.report-card,.item-card{background:var(--panel);border:1px solid var(--border);padding:16px;border-radius:14px}.report-card h3,.item-card h3{font-size:16px;margin:9px 0}.report-card p,.item-card p{font-size:13px;color:var(--muted);line-height:1.9}.report-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.number{color:#bd9cff;font-size:12px;font-weight:800;direction:ltr}.tag,.pill{font-size:11px;border-radius:20px;padding:5px 9px;background:#302340;color:#d8c5ff}.status{font-size:11px;padding:5px 9px;border-radius:20px;background:#44351b;color:var(--yellow)}.status.done{background:#153b31;color:var(--green)}.status.rejected{background:#48202b;color:#ff91a3}
+.meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;margin:12px 0}.actions{display:flex;gap:8px;flex-wrap:wrap}.field{margin:13px 0}.field label{display:block;font-size:13px;margin-bottom:6px;color:#d8cce6}
+input,textarea,select{width:100%;background:#100d18;border:1px solid var(--border);border-radius:10px;padding:11px;color:white;outline:none}input:focus,textarea:focus,select:focus{border-color:var(--purple)}textarea{min-height:100px;resize:vertical}select option{background:#171220}.form-card{max-width:760px}
+.table-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--border);border-radius:14px}table{width:100%;border-collapse:collapse;min-width:650px}th,td{padding:12px;text-align:right;border-bottom:1px solid var(--border);font-size:12px}th{color:#bca9d6;background:#1c1628}td{color:#e9e1f2}
+.muted{color:var(--muted)}.empty{text-align:center;padding:30px;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:14px}.auth{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px;background:rgba(5,3,10,.82);backdrop-filter:blur(7px)}.auth-box{width:min(440px,100%);background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:27px}.auth-box p{color:var(--muted);font-size:13px}.auth-tabs{display:flex;gap:8px;margin:18px 0}.auth-tabs button{flex:1}
+.codebox{direction:ltr;text-align:left;white-space:pre-wrap;background:#0b0912;border:1px solid var(--border);padding:14px;border-radius:10px;color:#c8aaff;font-family:monospace;font-size:13px;line-height:1.8;overflow:auto}.detail-box{background:#100d18;padding:14px;border:1px solid var(--border);border-radius:11px;line-height:1.9;font-size:13px}
+.certificate{background:#fff;color:#29203b;padding:34px;border:9px double #a17be5;border-radius:8px;text-align:center;max-width:850px;margin:15px auto}.certificate .cert-logo{font-size:22px;font-weight:800;color:#7045bb}.certificate h1{font-size:32px;color:#7045bb;margin:20px 0}.certificate .cert-name{font-size:27px;font-weight:800;margin:16px 0;color:#32234c}.certificate p{color:#514663;line-height:2}.cert-number{font-size:12px;color:#7256a1;direction:ltr}.cert-footer{display:flex;justify-content:space-between;margin-top:35px;gap:20px}.cert-footer div{border-top:1px solid #b6a4d3;padding:8px 15px;font-size:12px}
+.hub-intro{background:linear-gradient(120deg,#241637,#171020);border:1px solid #44315e;border-radius:16px;padding:20px;margin-bottom:16px}.hub-intro h1{margin:0 0 6px}.hub-intro p{color:var(--muted);margin:0}.hub-action{min-height:130px}.hub-action .symbol{font-size:25px}.hub-form{max-width:760px}.post-code{direction:ltr;text-align:left;white-space:pre-wrap;background:#0b0912;border:1px solid var(--border);padding:12px;border-radius:10px;color:#c8aaff;overflow:auto}
+
+/* BugVault interactive polish */
+:root{scroll-behavior:smooth}
+.hero{position:relative;overflow:hidden;animation:heroIn .65s ease both}
+.hero:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;left:-70px;top:-110px;background:radial-gradient(circle,rgba(173,126,255,.22),transparent 70%);pointer-events:none}
+.hero h1{letter-spacing:.1px}
+.item-card,.report-card,.stat,.hub-action{transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.item-card:hover,.report-card:hover,.hub-action:hover{transform:translateY(-4px);border-color:#7653a8;box-shadow:0 12px 28px rgba(0,0,0,.2)}
+.btn{transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(149,98,250,.18)}
+.page.active{animation:pageIn .28s ease both}
+.stat strong{font-variant-numeric:tabular-nums}
+.welcome-line{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:8px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;box-shadow:0 0 0 5px rgba(53,201,149,.1)}
+.hero-meta{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:15px;color:#d8c8ec;font-size:12px}
+.hero-meta span{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:6px 10px;border-radius:30px}
+.quick-search{display:flex;gap:9px;align-items:center;margin:17px 0 4px;max-width:680px}
+.quick-search input{flex:1;min-width:0;background:rgba(9,7,15,.55)}
+.toast-wrap{position:fixed;left:20px;bottom:20px;z-index:100;display:grid;gap:9px;pointer-events:none}
+.toast{background:#21182f;border:1px solid #604583;color:#f7f2ff;padding:12px 16px;border-radius:13px;box-shadow:0 12px 35px rgba(0,0,0,.35);font-size:13px;max-width:min(360px,calc(100vw - 40px));animation:toastIn .25s ease both}
+.toast.success{border-color:#28795f}.toast.error{border-color:#984254}
+@keyframes heroIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pageIn{from{opacity:.55;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(max-width:600px){.hero{padding:21px}.hero h1{font-size:22px}.quick-search{flex-direction:column;align-items:stretch}.toast-wrap{left:12px;bottom:12px}}
+
+@media(max-width:850px){.sidebar{position:relative;width:100%;height:auto;bottom:auto;padding:12px}.tagline,.nav-title{display:none}.nav{display:flex;overflow-x:auto;gap:4px}.nav button{white-space:nowrap;width:auto;padding:9px;font-size:12px}.main{margin:0;padding:16px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.topbar h2{font-size:18px}}
+@media print{body{background:white!important}body *{visibility:hidden!important}#printArea,#printArea *{visibility:visible!important}#printArea{position:absolute;top:0;left:0;width:100%;margin:0;padding:20px}.certificate{margin:0 auto;max-width:none;min-height:500px}.no-print{display:none!important}}
 </style>
 </head>
 <body>
-
-<div id="auth" class="auth">
- <div class="auth-box">
-  <div class="logo">Bug<span>Vault</span></div>
-  <p>منصتك للأكواد والأخطاء البرمجية</p>
-  <div class="auth-tabs">
-   <button class="btn" id="loginTab" onclick="authMode('login')">تسجيل الدخول</button>
-   <button class="btn secondary" id="registerTab" onclick="authMode('register')">حساب جديد</button>
-  </div>
-  <div id="loginForm">
-   <div class="field"><label>اسم المستخدم</label><input id="loginUser" placeholder="اسم المستخدم"></div>
-   <div class="field"><label>كلمة المرور</label><input id="loginPass" type="password" placeholder="كلمة المرور"></div>
-   <button class="btn" style="width:100%" onclick="login()">دخول</button>
-  </div>
-  <div id="registerForm" class="hidden">
-   <div class="field"><label>الاسم</label><input id="regName" placeholder="اسمك"></div>
-   <div class="field"><label>اسم المستخدم</label><input id="regUser" placeholder="اسم المستخدم"></div>
-   <div class="field"><label>كلمة المرور</label><input id="regPass" type="password" placeholder="كلمة المرور"></div>
-   <button class="btn" style="width:100%" onclick="register()">إنشاء حساب</button>
-  </div>
-  <p id="authMessage"></p>
-  <hr>
-  <p>حساب المشرف التجريبي: admin</p>
-  <p>كلمة المرور: BugVault123</p>
- </div>
+<div id="auth" class="auth hidden"><div class="auth-box">
+<div class="logo">Bug<span>Vault</span></div><p>منصتك للأكواد والأخطاء البرمجية</p><p>سجّل الدخول أو أنشئ حسابًا للمتابعة بهذه الميزة.</p>
+<div class="auth-tabs"><button class="btn" id="loginTab" onclick="authMode('login')">تسجيل الدخول</button><button class="btn secondary" id="registerTab" onclick="authMode('register')">حساب جديد</button></div>
+<div id="loginForm"><div class="field"><label>اسم المستخدم</label><input id="loginUser" placeholder="اسم المستخدم"></div><div class="field"><label>كلمة المرور</label><input id="loginPass" type="password" placeholder="كلمة المرور"></div><button class="btn" style="width:100%" onclick="login()">دخول</button></div>
+<div id="registerForm" class="hidden"><div class="field"><label>الاسم</label><input id="regName" placeholder="اسمك"></div><div class="field"><label>اسم المستخدم</label><input id="regUser" placeholder="اسم المستخدم"></div><div class="field"><label>كلمة المرور</label><input id="regPass" type="password" placeholder="كلمة المرور"></div><button class="btn" style="width:100%" onclick="register()">إنشاء حساب</button></div>
+<p id="authMessage"></p><button class="btn secondary" style="width:100%;margin-top:8px" onclick="closeAuth()">متابعة التصفح كزائر</button><hr><p>حساب المشرف التجريبي: admin</p><p>كلمة المرور: BugVault123</p>
+</div></div>
+<div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+<div id="app">
+<aside class="sidebar"><div class="logo">Bug<span>Vault</span></div><p class="tagline">منصة الأكواد والأخطاء البرمجية</p>
+<div class="nav-title">المنصة</div><nav class="nav">
+<button class="active" onclick="go('home',this)">⌂ الرئيسية</button><button id="adminArchiveNav" onclick="go('archive',this)">▤ أرشيف الأخطاء</button>
+<button onclick="go('report',this)">＋ إضافة بلاغ</button><button onclick="go('mine',this)">▣ بلاغاتي</button><button onclick="go('encyclopedia',this)">📚 الموسوعة البرمجية</button>
+<button onclick="go('courses',this)">🎓 الدورات التدريبية</button><button onclick="go('myCourses',this)">📖 دوراتي</button><button onclick="go('certificates',this)">🏆 شهاداتي</button>
+<button onclick="go('developerHub',this)">🤝 Developer Hub</button><button onclick="go('account',this)">♙ حسابي</button></nav>
+<div class="nav-title hidden" id="adminNavTitle">الإدارة</div><nav class="nav"><button id="adminNav" class="hidden" onclick="go('admin',this)">⚙ لوحة المشرف</button><button onclick="logout()">↪ تسجيل الخروج</button></nav>
+</aside>
+<main class="main"><header class="topbar"><h2 id="pageTitle">الرئيسية</h2><div class="user-chip" id="userChip"><button class="btn small" onclick="showAuth()">تسجيل الدخول</button></div></header>
+<section id="home" class="page active"><div class="hero">
+<div class="welcome-line"><span class="live-dot"></span><span id="welcomeTime">مساحة الإبداع البرمجي</span></div>
+<h1 id="heroGreeting">أهلًا بك في BugVault 💜</h1>
+<p id="heroSub">مكان يجمع المعرفة البرمجية، حل المشكلات، ومشاركة الخبرات. تصفّح واكتشف ما يناسبك.</p>
+<button class="btn" onclick="go('encyclopedia')">استكشف الموسوعة</button> <button class="btn secondary" onclick="go('courses')">اكتشف الدورات</button>
+<div class="hero-meta"><span>💡 تعلّم واكتشف</span><span>🤝 شارك خبرتك</span><span>🚀 طوّر مهاراتك</span></div>
 </div>
-
-<div id="app" class="hidden">
- <aside class="sidebar">
-  <div class="logo">Bug<span>Vault</span></div>
-  <p class="tagline">منصة الأكواد والأخطاء البرمجية</p>
-  <div class="nav-title">المنصة</div>
-  <nav class="nav">
-   <button class="active" onclick="go('home',this)">⌂ الرئيسية</button>
-   <button id="adminArchiveNav" class="hidden" onclick="go('archive',this)">▤ أرشيف الأخطاء</button>
-   <button onclick="go('report',this)">＋ إضافة بلاغ</button>
-   <button onclick="go('mine',this)">▣ بلاغاتي</button>
-   <button onclick="go('encyclopedia',this)">📚 الموسوعة البرمجية</button>
-   <button onclick="go('courses',this)">🎓 الدورات التدريبية</button>
-   <button onclick="go('myCourses',this)">📖 دوراتي</button>
-   <button onclick="go('certificates',this)">🏆 شهاداتي</button>
-   <button onclick="go('account',this)">♙ حسابي</button>
-  </nav>
-  <div class="nav-title hidden" id="adminNavTitle">الإدارة</div>
-  <nav class="nav">
-   <button id="adminNav" class="hidden" onclick="go('admin',this)">⚙ لوحة المشرف</button>
-   <button onclick="logout()">↪ تسجيل الخروج</button>
-  </nav>
- </aside>
-
- <main class="main">
-  <header class="topbar">
-   <h2 id="pageTitle">الرئيسية</h2>
-   <div class="user-chip" id="userChip"></div>
-  </header>
-
-  <section id="home" class="page active">
-   <div class="hero">
-    <h1>مرحبًا بك في BugVault 💜</h1>
-    <p>اكتشف الأكواد البرمجية، تعرّف على الأخطاء، وتعلّم طرق حلها.</p>
-    <button class="btn" onclick="go('encyclopedia')">استكشف الموسوعة</button>
-    <button class="btn secondary" onclick="go('courses')">اكتشف الدورات</button>
-   </div>
-   <div class="stats hidden" id="stats"></div>
-   <div class="section-head hidden" id="latestReportsHead"><h3>أحدث البلاغات</h3><button class="btn secondary small" onclick="go('archive')">عرض الكل</button></div>
-   <div class="grid" id="latest"></div>
-   <div class="section-head"><h3>أقسام المنصة</h3></div>
-   <div class="grid">
-    <div class="item-card"><h3>📚 الموسوعة البرمجية</h3><p>تعلم لغات البرمجة والأكواد والأخطاء الشائعة.</p><button class="btn small" onclick="go('encyclopedia')">استكشف</button></div>
-    <div class="item-card"><h3>🎓 الدورات التدريبية</h3><p>سجل في الدورات وطوّر مهاراتك البرمجية.</p><button class="btn small" onclick="go('courses')">عرض الدورات</button></div>
-   </div>
-  </section>
-
-  <section id="archive" class="page">
-   <div class="section-head"><h3>أرشيف الأخطاء البرمجية</h3><span class="muted" id="archiveCount"></span></div>
-   <div class="field"><input id="search" placeholder="ابحث برقم البلاغ أو عنوانه..." oninput="renderArchive()"></div>
-   <div class="field"><select id="filterStatus" onchange="renderArchive()"><option value="">كل الحالات</option><option>قيد المراجعة</option><option>تم الحل</option><option>لم يتم الحل</option></select></div>
-   <div class="grid" id="archiveList"></div>
-  </section>
-
-  <section id="report" class="page">
-   <div class="card form-card">
-    <h3>إضافة بلاغ جديد</h3>
-    <div class="field"><label>عنوان البلاغ</label><input id="newTitle"></div>
-    <div class="field"><label>التصنيف</label><select id="newCategory"><option>واجهة المستخدم</option><option>قواعد البيانات</option><option>الشبكات</option><option>الأمان</option><option>أخطاء برمجية</option><option>أداء النظام</option><option>أخرى</option></select></div>
-    <div class="field"><label>وصف المشكلة</label><textarea id="newDesc"></textarea></div>
-    <div class="field"><label>الحل المقترح</label><textarea id="newSolution"></textarea></div>
-    <button class="btn" onclick="addReport()">إرسال البلاغ</button><p id="reportMessage" class="muted"></p>
-   </div>
-  </section>
-
-  <section id="mine" class="page"><div class="section-head"><h3>بلاغاتي</h3></div><div class="grid" id="myReports"></div></section>
-
-  <section id="encyclopedia" class="page">
-   <div class="hero"><h1>📚 الموسوعة البرمجية</h1><p>مرجعك للتعرف على الأكواد البرمجية والأخطاء وأسبابها وطرق حلها.</p></div>
-   <div class="field"><input id="encySearch" placeholder="ابحث عن لغة أو كود أو خطأ..." oninput="renderEncyclopedia()"></div>
-   <div class="field"><select id="encyFilter" onchange="renderEncyclopedia()"><option value="">جميع المواضيع</option><option>Python</option><option>JavaScript</option><option>HTML</option><option>CSS</option><option>أخطاء برمجية</option></select></div>
-   <div class="grid" id="encyList"></div>
-  </section>
-  <section id="encyDetail" class="page"><div class="card form-card" id="encyDetailContent"></div></section>
-
-  <section id="courses" class="page">
-   <div class="hero"><h1>🎓 الدورات التدريبية</h1><p>اكتسب مهارات جديدة من خلال الدورات البرمجية.</p></div>
-   <div class="field"><input id="courseSearch" placeholder="ابحث عن دورة..." oninput="renderCourses()"></div>
-   <div class="grid" id="courseList"></div>
-  </section>
-  <section id="myCourses" class="page"><div class="section-head"><h3>دوراتي المسجل فيها</h3></div><div class="grid" id="myCourseList"></div></section>
-  <section id="courseDetail" class="page"><div class="card form-card" id="courseDetailContent"></div></section>
-
-  <section id="certificates" class="page">
-   <div class="hero"><h1>🏆 شهاداتي</h1><p>شهادات الدورات التي أكملتها واعتمدها المشرف.</p></div>
-   <div class="grid" id="certificateList"></div>
-  </section>
-  <section id="certificateView" class="page">
-   <div class="no-print actions" style="margin-bottom:15px">
-    <button class="btn" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
-    <button class="btn secondary" onclick="go('certificates')">العودة لشهاداتي</button>
-   </div>
-   <div id="printArea"></div>
-  </section>
-
-  <section id="details" class="page"><div class="card form-card" id="detailContent"></div></section>
-  <section id="account" class="page">
-   <div class="card form-card"><h3>معلومات الحساب</h3>
-    <p>الاسم: <strong id="accountName"></strong></p><p>اسم المستخدم: <strong id="accountUser"></strong></p><p>نوع الحساب: <strong id="accountRole"></strong></p>
-    <hr><button class="btn danger" onclick="logout()">تسجيل الخروج</button>
-   </div>
-  </section>
-
-  <section id="admin" class="page">
-   <div class="hero"><h1>لوحة إدارة BugVault</h1><p>إدارة البلاغات والدورات والمشاركين والشهادات.</p></div>
-   <div class="stats" id="adminStats"></div>
-   <div class="section-head"><h3>إدارة البلاغات</h3></div>
-   <div class="table-wrap"><table><thead><tr><th>رقم البلاغ</th><th>العنوان</th><th>صاحب البلاغ</th><th>الحالة</th><th>الإجراء</th></tr></thead><tbody id="adminTable"></tbody></table></div>
-
-   <div class="section-head"><h3>إضافة دورة جديدة</h3></div>
-   <div class="card form-card">
-    <div class="field"><label>اسم الدورة</label><input id="courseTitle"></div>
-    <div class="field"><label>وصف الدورة</label><textarea id="courseDesc"></textarea></div>
-    <div class="field"><label>تاريخ الدورة</label><input id="courseDate" type="date"></div>
-    <div class="field"><label>مدة الدورة</label><input id="courseDuration" placeholder="مثال: 3 أيام"></div>
-    <div class="field"><label>عدد المقاعد</label><input id="courseSeats" type="number" min="1" value="20"></div>
-    <div class="field"><label>مستوى الدورة</label><select id="courseLevel"><option>مبتدئ</option><option>متوسط</option><option>متقدم</option></select></div>
-    <button class="btn" onclick="addCourse()">إضافة الدورة</button><p id="courseMessage" class="muted"></p>
-   </div>
-
-   <div class="section-head"><h3>إدارة الدورات والحضور والشهادات</h3></div>
-   <div class="table-wrap"><table><thead><tr><th>الدورة</th><th>التاريخ</th><th>المسجلون</th><th>الإجراء</th></tr></thead><tbody id="adminCourses"></tbody></table></div>
-   <div class="section-head"><h3>المشاركون والحضور وإتمام الدورة</h3></div>
-   <div id="attendanceArea"></div>
-  </section>
- </main>
+<div class="stats" id="publicStats"></div>
+<div class="quick-search"><input id="homeSearch" placeholder="🔎 ابحث عن خطأ أو لغة برمجة أو دورة..." onkeydown="if(event.key==='Enter')quickSearch()"><button class="btn" onclick="quickSearch()">ابحث</button></div>
+<div class="stats hidden" id="stats"></div><div class="section-head hidden" id="latestReportsHead"><h3>أحدث البلاغات</h3><button class="btn secondary small" onclick="go('archive')">عرض الكل</button></div><div class="grid" id="latest"></div>
+<div class="section-head"><h3>اكتشف أقسام BugVault</h3><span class="muted">اختر وجهتك وابدأ</span></div><div class="grid"><div class="item-card"><h3>📚 الموسوعة البرمجية</h3><p>تعلم لغات البرمجة والأكواد والأخطاء الشائعة.</p><button class="btn small" onclick="go('encyclopedia')">استكشف</button></div><div class="item-card"><h3>🎓 الدورات التدريبية</h3><p>سجل في الدورات وطوّر مهاراتك البرمجية.</p><button class="btn small" onclick="go('courses')">عرض الدورات</button></div><div class="item-card"><h3>🤝 مجتمع المطورين</h3><p>شارك خبرتك، اطلب المساعدة، واقترح أفكارًا لتطوير المنصة.</p><button class="btn small" onclick="go('developerHub')">دخول المجتمع</button></div><div class="item-card"><h3>🗂️ أرشيف الأخطاء</h3><p>تصفّح البلاغات والحالات والحلول المنشورة.</p><button class="btn small" onclick="go('archive')">تصفح الأرشيف</button></div></div></section>
+<section id="archive" class="page"><div class="section-head"><h3>أرشيف الأخطاء البرمجية</h3><span class="muted" id="archiveCount"></span></div><div class="field"><input id="search" placeholder="ابحث برقم البلاغ أو عنوانه..." oninput="renderArchive()"></div><div class="field"><select id="filterStatus" onchange="renderArchive()"><option value="">كل الحالات</option><option>قيد المراجعة</option><option>تم الحل</option><option>لم يتم الحل</option></select></div><div class="grid" id="archiveList"></div></section>
+<section id="report" class="page"><div class="card form-card"><h3>إضافة بلاغ جديد</h3><div class="field"><label>عنوان البلاغ</label><input id="newTitle"></div><div class="field"><label>التصنيف</label><select id="newCategory"><option>واجهة المستخدم</option><option>قواعد البيانات</option><option>الشبكات</option><option>الأمان</option><option>أخطاء برمجية</option><option>أداء النظام</option><option>أخرى</option></select></div><div class="field"><label>وصف المشكلة</label><textarea id="newDesc"></textarea></div><div class="field"><label>الحل المقترح</label><textarea id="newSolution"></textarea></div><button class="btn" onclick="addReport()">إرسال البلاغ</button><p id="reportMessage" class="muted"></p></div></section>
+<section id="mine" class="page"><div class="section-head"><h3>بلاغاتي</h3></div><div class="grid" id="myReports"></div></section>
+<section id="encyclopedia" class="page"><div class="hero"><h1>📚 الموسوعة البرمجية</h1><p>مرجعك للتعرف على الأكواد البرمجية والأخطاء وأسبابها وطرق حلها.</p></div><div class="field"><input id="encySearch" placeholder="ابحث عن لغة أو كود أو خطأ..." oninput="renderEncyclopedia()"></div><div class="field"><select id="encyFilter" onchange="renderEncyclopedia()"><option value="">جميع المواضيع</option><option>Python</option><option>JavaScript</option><option>HTML</option><option>CSS</option><option>أخطاء برمجية</option></select></div><div class="grid" id="encyList"></div></section>
+<section id="encyDetail" class="page"><div class="card form-card" id="encyDetailContent"></div></section>
+<section id="courses" class="page"><div class="hero"><h1>🎓 الدورات التدريبية</h1><p>اكتسب مهارات جديدة من خلال الدورات البرمجية.</p></div><div class="field"><input id="courseSearch" placeholder="ابحث عن دورة..." oninput="renderCourses()"></div><div class="grid" id="courseList"></div></section>
+<section id="myCourses" class="page"><div class="section-head"><h3>دوراتي المسجل فيها</h3></div><div class="grid" id="myCourseList"></div></section><section id="courseDetail" class="page"><div class="card form-card" id="courseDetailContent"></div></section>
+<section id="certificates" class="page"><div class="hero"><h1>🏆 شهاداتي</h1><p>شهادات الدورات التي أكملتها واعتمدها المشرف.</p></div><div class="grid" id="certificateList"></div></section>
+<section id="certificateView" class="page"><div class="no-print actions" style="margin-bottom:15px"><button class="btn" onclick="window.print()">🖨️ طباعة / حفظ PDF</button><button class="btn secondary" onclick="go('certificates')">العودة لشهاداتي</button></div><div id="printArea"></div></section>
+<section id="details" class="page"><div class="card form-card" id="detailContent"></div></section>
+<section id="developerHub" class="page">
+<div class="hub-intro"><h1>🤝 Developer Hub</h1><p>مجتمع المطورين — شارك خبرتك، اطلب المساعدة، وانشر أفكارك البرمجية.</p></div>
+<div class="stats" id="hubStats"></div>
+<div class="grid">
+<div class="item-card hub-action"><div class="symbol">🙌</div><h3>أقدّم مساعدة</h3><p>اعرض مهاراتك وخبراتك البرمجية لمساعدة الآخرين.</p><button class="btn small" onclick="openHubForm('مساعدة مقدمة')">إضافة مشاركة</button></div>
+<div class="item-card hub-action"><div class="symbol">🆘</div><h3>أطلب مساعدة</h3><p>اشرح المشكلة التي تواجهك ودع المطورين يساعدونك.</p><button class="btn small" onclick="openHubForm('طلب مساعدة')">طلب مساعدة</button></div>
+<div class="item-card hub-action"><div class="symbol">💻</div><h3>أشارك كود</h3><p>شارك كودًا مفيدًا مع شرح مبسط وطريقة استخدامه.</p><button class="btn small" onclick="openHubForm('مشاركة كود')">مشاركة كود</button></div>
+<div class="item-card hub-action"><div class="symbol">💡</div><h3>أقترح تطوير</h3><p>اقترح ميزة أو تحسينًا يساعد على تطوير BugVault.</p><button class="btn small" onclick="openHubForm('اقتراح تطوير')">إرسال اقتراح</button></div>
 </div>
-
+<div id="hubFormWrap" class="card hub-form hidden" style="margin-top:18px"><div class="section-head"><h3 id="hubFormTitle">مشاركة جديدة</h3><button class="btn secondary small" onclick="closeHubForm()">إغلاق</button></div>
+<div class="field"><label>نوع المشاركة</label><select id="hubType"><option>مساعدة مقدمة</option><option>طلب مساعدة</option><option>مشاركة كود</option><option>اقتراح تطوير</option></select></div>
+<div class="field"><label>عنوان المشاركة</label><input id="hubTitle" placeholder="اكتب عنوانًا واضحًا"></div>
+<div class="field"><label>التخصص أو التصنيف</label><select id="hubCategory"><option>عام</option><option>Oracle APEX</option><option>SQL / قواعد البيانات</option><option>HTML</option><option>CSS</option><option>JavaScript</option><option>Python</option><option>أمن المعلومات</option><option>تطوير المنصة</option><option>أخرى</option></select></div>
+<div class="field"><label>التفاصيل</label><textarea id="hubDescription" placeholder="اكتب التفاصيل أو طريقة المساعدة أو وصف المشكلة أو الاقتراح..."></textarea></div>
+<div class="field" id="hubCodeField"><label>الكود (اختياري — لمشاركة الأكواد)</label><textarea id="hubCode" placeholder="اكتب الكود هنا" style="direction:ltr;text-align:left"></textarea></div>
+<button class="btn" onclick="submitHubPost()">نشر المشاركة</button><p id="hubMessage" class="muted"></p></div>
+<div class="section-head"><h3>مشاركات المجتمع</h3><span class="muted" id="hubCount"></span></div>
+<div class="field"><input id="hubSearch" placeholder="ابحث في المشاركات..." oninput="renderHub()"></div>
+<div class="field"><select id="hubFilter" onchange="renderHub()"><option value="">كل أنواع المشاركات</option><option>مساعدة مقدمة</option><option>طلب مساعدة</option><option>مشاركة كود</option><option>اقتراح تطوير</option></select></div>
+<div class="grid" id="hubList"></div>
+</section>
+<section id="account" class="page"><div class="card form-card"><h3>معلومات الحساب</h3><p>الاسم: <strong id="accountName"></strong></p><p>اسم المستخدم: <strong id="accountUser"></strong></p><p>نوع الحساب: <strong id="accountRole"></strong></p><hr><button class="btn danger" onclick="logout()">تسجيل الخروج</button></div></section>
+<section id="admin" class="page"><div class="hero"><h1>لوحة إدارة BugVault</h1><p>إدارة البلاغات والدورات والمشاركين والشهادات ومساهمات المجتمع.</p></div><div class="stats" id="adminStats"></div>
+<div class="section-head"><h3>إدارة البلاغات</h3></div><div class="table-wrap"><table><thead><tr><th>رقم البلاغ</th><th>العنوان</th><th>صاحب البلاغ</th><th>الحالة</th><th>الإجراء</th></tr></thead><tbody id="adminTable"></tbody></table></div>
+<div class="section-head"><h3>إضافة دورة جديدة</h3></div><div class="card form-card"><div class="field"><label>اسم الدورة</label><input id="courseTitle"></div><div class="field"><label>وصف الدورة</label><textarea id="courseDesc"></textarea></div><div class="field"><label>تاريخ الدورة</label><input id="courseDate" type="date"></div><div class="field"><label>مدة الدورة</label><input id="courseDuration" placeholder="مثال: 3 أيام"></div><div class="field"><label>عدد المقاعد</label><input id="courseSeats" type="number" min="1" value="20"></div><div class="field"><label>مستوى الدورة</label><select id="courseLevel"><option>مبتدئ</option><option>متوسط</option><option>متقدم</option></select></div><button class="btn" onclick="addCourse()">إضافة الدورة</button><p id="courseMessage" class="muted"></p></div>
+<div class="section-head"><h3>إدارة الدورات والحضور والشهادات</h3></div><div class="table-wrap"><table><thead><tr><th>الدورة</th><th>التاريخ</th><th>المسجلون</th><th>الإجراء</th></tr></thead><tbody id="adminCourses"></tbody></table></div><div class="section-head"><h3>المشاركون والحضور وإتمام الدورة</h3></div><div id="attendanceArea"></div>
+<div class="section-head"><h3>إدارة مشاركات Developer Hub</h3></div><div class="table-wrap"><table><thead><tr><th>العنوان</th><th>النوع</th><th>صاحب المشاركة</th><th>الحالة</th><th>الإجراء</th></tr></thead><tbody id="adminHubTable"></tbody></table></div>
+</section>
+</main></div>
 <script>
 const $=id=>document.getElementById(id);
 const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch(e){return fallback}};
 const save=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
-let users=read('bv_users',[]);
-let reports=read('bv_reports',[]);
-let current=read('bv_current',null);
-let courses=read('bv_courses',[]);
-let nextNumber=Number(localStorage.getItem('bv_next')||1001);
-
+let users=read('bv_users',[]),reports=read('bv_reports',[]),current=read('bv_current',null),courses=read('bv_courses',[]),hubPosts=read('bv_community',[]);
+let nextNumber=Number(localStorage.getItem('bv_next')||1001),nextHubId=Number(localStorage.getItem('bv_hub_next')||1);
 if(!users.some(u=>u.username==='admin'))users.push({name:'مدير النظام',username:'admin',password:'BugVault123',role:'admin'});
-
-if(reports.length===0){
- const samples=[
- ['مشكلة تسجيل الدخول','أخطاء برمجية','لا يستطيع المستخدم تسجيل الدخول رغم إدخال البيانات الصحيحة.','التحقق من بيانات الدخول ومعالجة الجلسة.'],
- ['تأخر تحميل الصفحة الرئيسية','أداء النظام','تستغرق الصفحة الرئيسية وقتًا طويلًا حتى تظهر.','تحسين تحميل الموارد.'],
- ['عدم حفظ البيانات','قواعد البيانات','البيانات المدخلة لا تظهر بعد إعادة فتح الصفحة.','مراجعة عملية الحفظ.'],
- ['اختفاء الصور','واجهة المستخدم','بعض الصور لا تظهر داخل الصفحة.','التحقق من مسارات الصور.'],
- ['خطأ في البحث','أخطاء برمجية','نتائج البحث لا تتطابق مع الكلمات المدخلة.','مراجعة آلية البحث.'],
- ['مشكلة في تسجيل الخروج','أمان','تظل جلسة المستخدم نشطة بعد تسجيل الخروج.','إنهاء الجلسة ومسح البيانات المؤقتة.'],
- ['عدم توافق التصميم مع الهاتف','واجهة المستخدم','تظهر العناصر خارج الشاشة عند استخدام الهاتف.','تحسين التصميم المتجاوب.'],
- ['تكرار الإشعارات','أخطاء برمجية','يظهر الإشعار أكثر من مرة للمستخدم.','مراجعة آلية الإشعارات.'],
- ['بطء عرض التقارير','أداء النظام','يتأخر عرض التقارير عند وجود بيانات كثيرة.','تحسين الاستعلامات.'],
- ['فشل تحديث الملف الشخصي','أخطاء برمجية','لا يتم حفظ التعديلات على الملف الشخصي.','مراجعة نموذج التعديل.'],
- ['مشكلة في رفع الملفات','الشبكات','يفشل رفع بعض الملفات إلى النظام.','التحقق من حجم الملف ونوعه.'],
- ['عدم ظهور نتائج التصنيف','واجهة المستخدم','لا تظهر النتائج المتوقعة عند اختيار تصنيف.','مراجعة خيارات التصفية.'],
- ['خطأ في صلاحيات المستخدم','أمان','يستطيع مستخدم عادي الوصول إلى صفحة إدارية.','التحقق من الصلاحيات على الخادم.'],
- ['توقف زر الإرسال','واجهة المستخدم','زر إرسال النموذج لا يستجيب.','مراجعة أحداث الزر.'],
- ['فشل الاتصال بالخادم','الشبكات','تظهر رسالة تعذر الاتصال بالخادم.','التحقق من الاتصال.'],
- ['تكرار السجلات','قواعد البيانات','تظهر بعض السجلات مكررة.','منع تكرار الإدخالات.'],
- ['خطأ في عرض التاريخ','واجهة المستخدم','يظهر التاريخ بتنسيق غير صحيح.','توحيد تنسيق التاريخ.'],
- ['عدم تحديث الإحصائيات','أخطاء برمجية','لا تتغير أرقام لوحة التحكم بعد إضافة بلاغ.','تحديث الإحصائيات بعد كل عملية.'],
- ['انتهاء الجلسة بسرعة','أمان','تنتهي جلسة المستخدم قبل انتهاء العمل.','مراجعة مدة الجلسة.'],
- ['مشكلة في ترتيب البلاغات','أخطاء برمجية','لا تظهر البلاغات حسب الأحدث.','ترتيب السجلات حسب التاريخ.']
- ];
- samples.forEach((s,i)=>reports.push({id:1001+i,number:'BV-'+(1001+i),title:s[0],category:s[1],description:s[2],solution:s[3],status:['تم الحل','قيد المراجعة','تم الحل','قيد المراجعة'][i%4],author:'admin',authorName:'مدير النظام',date:new Date(Date.now()-i*86400000).toLocaleDateString('ar-SA')}));
- nextNumber=Math.max(nextNumber,1021);
-}
-if(courses.length===0){
- courses=[
- {id:1,title:'أساسيات لغة Python',description:'تعلم أساسيات البرمجة باستخدام Python والمتغيرات والشروط والحلقات.',date:'2026-12-01',duration:'3 أيام',seats:20,level:'مبتدئ',status:'متاحة',enrollments:[]},
- {id:2,title:'اكتشاف الأخطاء البرمجية وإصلاحها',description:'تعرف على أنواع الأخطاء البرمجية وطرق تحليلها وتصحيحها.',date:'2026-12-08',duration:'يومان',seats:15,level:'متوسط',status:'متاحة',enrollments:[]},
- {id:3,title:'أساسيات HTML وCSS',description:'تعلم بناء صفحات الويب وتنسيقها وتصميم واجهات بسيطة.',date:'2026-12-15',duration:'4 أيام',seats:25,level:'مبتدئ',status:'متاحة',enrollments:[]},
- {id:4,title:'مقدمة في JavaScript',description:'تعرف على أساسيات JavaScript والتفاعل مع صفحات الويب.',date:'2026-12-22',duration:'3 أيام',seats:20,level:'مبتدئ',status:'متاحة',enrollments:[]}
- ];
-}
-courses.forEach(c=>{
- if(!Array.isArray(c.enrollments))c.enrollments=[];
- c.enrollments.forEach(e=>{if(typeof e.attended!=='boolean')e.attended=false;});
-});
-function persist(){
- save('bv_users',users);save('bv_reports',reports);save('bv_courses',courses);
- localStorage.setItem('bv_next',nextNumber);
-}
+if(reports.length===0){const samples=[
+['مشكلة تسجيل الدخول','أخطاء برمجية','لا يستطيع المستخدم تسجيل الدخول رغم إدخال البيانات الصحيحة.','التحقق من بيانات الدخول ومعالجة الجلسة.'],
+['تأخر تحميل الصفحة الرئيسية','أداء النظام','تستغرق الصفحة الرئيسية وقتًا طويلًا حتى تظهر.','تحسين تحميل الموارد.'],
+['عدم حفظ البيانات','قواعد البيانات','البيانات المدخلة لا تظهر بعد إعادة فتح الصفحة.','مراجعة عملية الحفظ.'],
+['اختفاء الصور','واجهة المستخدم','بعض الصور لا تظهر داخل الصفحة.','التحقق من مسارات الصور.'],
+['خطأ في البحث','أخطاء برمجية','نتائج البحث لا تتطابق مع الكلمات المدخلة.','مراجعة آلية البحث.'],
+['مشكلة في تسجيل الخروج','أمان','تظل جلسة المستخدم نشطة بعد تسجيل الخروج.','إنهاء الجلسة ومسح البيانات المؤقتة.'],
+['عدم توافق التصميم مع الهاتف','واجهة المستخدم','تظهر العناصر خارج الشاشة عند استخدام الهاتف.','تحسين التصميم المتجاوب.'],
+['تكرار الإشعارات','أخطاء برمجية','يظهر الإشعار أكثر من مرة للمستخدم.','مراجعة آلية الإشعارات.'],
+['بطء عرض التقارير','أداء النظام','يتأخر عرض التقارير عند وجود بيانات كثيرة.','تحسين الاستعلامات.'],
+['فشل تحديث الملف الشخصي','أخطاء برمجية','لا يتم حفظ التعديلات على الملف الشخصي.','مراجعة نموذج التعديل.'],
+['مشكلة في رفع الملفات','الشبكات','يفشل رفع بعض الملفات إلى النظام.','التحقق من حجم الملف ونوعه.'],
+['عدم ظهور نتائج التصنيف','واجهة المستخدم','لا تظهر النتائج المتوقعة عند اختيار تصنيف.','مراجعة خيارات التصفية.'],
+['خطأ في صلاحيات المستخدم','أمان','يستطيع مستخدم عادي الوصول إلى صفحة إدارية.','التحقق من الصلاحيات على الخادم.'],
+['توقف زر الإرسال','واجهة المستخدم','زر إرسال النموذج لا يستجيب.','مراجعة أحداث الزر.'],
+['فشل الاتصال بالخادم','الشبكات','تظهر رسالة تعذر الاتصال بالخادم.','التحقق من الاتصال.'],
+['تكرار السجلات','قواعد البيانات','تظهر بعض السجلات مكررة.','منع تكرار الإدخالات.'],
+['خطأ في عرض التاريخ','واجهة المستخدم','يظهر التاريخ بتنسيق غير صحيح.','توحيد تنسيق التاريخ.'],
+['عدم تحديث الإحصائيات','أخطاء برمجية','لا تتغير أرقام لوحة التحكم بعد إضافة بلاغ.','تحديث الإحصائيات بعد كل عملية.'],
+['انتهاء الجلسة بسرعة','أمان','تنتهي جلسة المستخدم قبل انتهاء العمل.','مراجعة مدة الجلسة.'],
+['مشكلة في ترتيب البلاغات','أخطاء برمجية','لا تظهر البلاغات حسب الأحدث.','ترتيب السجلات حسب التاريخ.']];
+samples.forEach((s,i)=>reports.push({id:1001+i,number:'BV-'+(1001+i),title:s[0],category:s[1],description:s[2],solution:s[3],status:['تم الحل','قيد المراجعة','تم الحل','قيد المراجعة'][i%4],author:'admin',authorName:'مدير النظام',date:new Date(Date.now()-i*86400000).toLocaleDateString('ar-SA')}));nextNumber=Math.max(nextNumber,1021);}
+if(courses.length===0)courses=[
+{id:1,title:'أساسيات لغة Python',description:'تعلم أساسيات البرمجة باستخدام Python والمتغيرات والشروط والحلقات.',date:'2026-12-01',duration:'3 أيام',seats:20,level:'مبتدئ',status:'متاحة',enrollments:[]},
+{id:2,title:'اكتشاف الأخطاء البرمجية وإصلاحها',description:'تعرف على أنواع الأخطاء البرمجية وطرق تحليلها وتصحيحها.',date:'2026-12-08',duration:'يومان',seats:15,level:'متوسط',status:'متاحة',enrollments:[]},
+{id:3,title:'أساسيات HTML وCSS',description:'تعلم بناء صفحات الويب وتنسيقها وتصميم واجهات بسيطة.',date:'2026-12-15',duration:'4 أيام',seats:25,level:'مبتدئ',status:'متاحة',enrollments:[]},
+{id:4,title:'مقدمة في JavaScript',description:'تعرف على أساسيات JavaScript والتفاعل مع صفحات الويب.',date:'2026-12-22',duration:'3 أيام',seats:20,level:'مبتدئ',status:'متاحة',enrollments:[]}];
+courses.forEach(c=>{if(!Array.isArray(c.enrollments))c.enrollments=[];c.enrollments.forEach(e=>{if(typeof e.attended!=='boolean')e.attended=false;});});
+function persist(){save('bv_users',users);save('bv_reports',reports);save('bv_courses',courses);save('bv_community',hubPosts);localStorage.setItem('bv_next',nextNumber);localStorage.setItem('bv_hub_next',nextHubId);}
 persist();
+function escapeHTML(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function me(){return users.find(u=>u.username===current?.username)}function isAdmin(){return me()?.role==='admin'}
 
-function escapeHTML(value){
- return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function showToast(message,type='success'){
+ const wrap=$('toastWrap');if(!wrap)return;
+ const item=document.createElement('div');item.className='toast '+type;item.textContent=message;wrap.appendChild(item);
+ setTimeout(()=>{item.style.opacity='0';item.style.transform='translateY(8px)';setTimeout(()=>item.remove(),220)},3200);
 }
-function me(){return users.find(u=>u.username===current?.username)}
-function isAdmin(){return me()?.role==='admin'}
-function authMode(mode){
- $('loginForm').classList.toggle('hidden',mode!=='login');
- $('registerForm').classList.toggle('hidden',mode!=='register');
- $('loginTab').className=mode==='login'?'btn':'btn secondary';
- $('registerTab').className=mode==='register'?'btn':'btn secondary';
- $('authMessage').textContent='';
+function updateWelcome(){
+ $('welcomeTime').textContent='مرحبًا بك في BugVault';
+ const user=me();
+ $('heroGreeting').textContent=user?'أهلًا '+user.name+' 💜':'أهلًا بك في BugVault 💜';
+ $('heroSub').textContent=user?'يسعدنا وجودك معنا. استكشف المعرفة، تابع دوراتك، وشارك مجتمع المطورين.':'تصفّح بحرية، اكتشف المعرفة البرمجية، وعندما تحتاج للمشاركة أو إرسال طلب يمكنك تسجيل الدخول.';
 }
-function login(){
- const u=$('loginUser').value.trim(),p=$('loginPass').value;
- const user=users.find(x=>x.username===u&&x.password===p);
- if(!user){$('authMessage').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';return}
- current={username:user.username};save('bv_current',current);startApp();
+function updatePublicStats(){
+ const reportCount=reports.length,courseCount=courses.length,postCount=hubPosts.filter(p=>['مقبول','قيد التنفيذ','تم التنفيذ'].includes(p.status)).length;
+ $('publicStats').innerHTML=stat('🐛','بلاغات في الأرشيف',reportCount)+stat('🎓','دورات متاحة',courseCount)+stat('🤝','مشاركات المجتمع',postCount)+stat('📚','مواضيع الموسوعة',encyclopedia.length);
 }
-function register(){
- const name=$('regName').value.trim(),username=$('regUser').value.trim(),password=$('regPass').value;
- if(!name||!username||!password){$('authMessage').textContent='يرجى تعبئة جميع الحقول';return}
- if(username==='admin'||users.some(u=>u.username===username)){$('authMessage').textContent='اسم المستخدم مستخدم مسبقًا';return}
- if(password.length<4){$('authMessage').textContent='كلمة المرور يجب ألا تقل عن 4 أحرف';return}
- users.push({name,username,password,role:'user'});persist();
- $('loginUser').value=username;$('loginPass').value=password;authMode('login');
- $('authMessage').textContent='تم إنشاء الحساب. يمكنك تسجيل الدخول.';
-}
-
-function startApp(){
- if(!me()){logout();return}
- const admin=isAdmin();
-
- $('auth').classList.add('hidden');
- $('app').classList.remove('hidden');
-
- $('userChip').textContent=me().name+(admin?' · مشرف':'');
- $('adminNav').classList.toggle('hidden',!admin);
- $('adminNavTitle').classList.toggle('hidden',!admin);
- $('adminArchiveNav').classList.toggle('hidden',!admin);
-
- $('stats').classList.toggle('hidden',!admin);
- $('latestReportsHead').classList.toggle('hidden',!admin);
- $('latest').classList.toggle('hidden',!admin);
-
- updateAll();
- go('home');
+function quickSearch(){
+ const q=$('homeSearch').value.trim();if(!q){showToast('اكتب كلمة للبحث أولًا','error');return}
+ $('search').value=q;$('encySearch').value=q;$('courseSearch').value=q;
+ const inReports=reports.some(r=>[r.number,r.title,r.category,r.description].join(' ').toLowerCase().includes(q.toLowerCase()));
+ const inEncy=encyclopedia.some(e=>[e.title,e.category,e.description].join(' ').toLowerCase().includes(q.toLowerCase()));
+ const inCourses=courses.some(c=>[c.title,c.description,c.level].join(' ').toLowerCase().includes(q.toLowerCase()));
+ if(inEncy){go('encyclopedia');renderEncyclopedia();showToast('وجدنا مواضيع قد تساعدك في الموسوعة');}
+ else if(inCourses){go('courses');renderCourses();showToast('وجدنا دورات مرتبطة ببحثك');}
+ else if(inReports){go('archive');renderArchive();showToast('هذه نتائج البحث في أرشيف الأخطاء');}
+ else{go('encyclopedia');renderEncyclopedia();showToast('لم نجد تطابقًا مباشرًا؛ جرّب كلمة أخرى','error');}
 }
 
-function logout(){
- current=null;localStorage.removeItem('bv_current');
- $('app').classList.add('hidden');$('auth').classList.remove('hidden');authMode('login');
-}
-
-const titles={home:'الرئيسية',archive:'أرشيف الأخطاء',report:'إضافة بلاغ',mine:'بلاغاتي',encyclopedia:'الموسوعة البرمجية',encyDetail:'تفاصيل الموضوع',courses:'الدورات التدريبية',myCourses:'دوراتي',courseDetail:'تفاصيل الدورة',certificates:'شهاداتي',certificateView:'عرض الشهادة',details:'تفاصيل البلاغ',account:'حسابي',admin:'لوحة المشرف'};
-
-function go(page,button){
- if(!me()){logout();return}
-
- if((page==='admin'||page==='archive')&&!isAdmin()){
-  alert('هذه الصفحة للمشرف فقط');
-  return;
- }
-
- if(page==='details'){
-  alert('افتح تفاصيل البلاغ من قائمة بلاغاتك.');
-  return;
- }
-
- const allowed=['home','report','mine','encyclopedia','encyDetail','courses','myCourses','courseDetail','certificates','certificateView','details','account','admin','archive'];
- if(!allowed.includes(page))return;
-
- if(page==='admin'&&!isAdmin())return;
- if(page==='archive'&&!isAdmin())return;
-
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- $(page).classList.add('active');
-
- document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
- if(button)button.classList.add('active');
-
- $('pageTitle').textContent=titles[page]||'BugVault';
-
- if(page==='archive')renderArchive();
- if(page==='mine')renderMine();
- if(page==='encyclopedia')renderEncyclopedia();
- if(page==='courses')renderCourses();
- if(page==='myCourses')renderMyCourses();
- if(page==='certificates')renderCertificates();
- if(page==='admin')renderAdmin();
- if(page==='account')renderAccount();
-}
-
-function statusClass(s){return s==='تم الحل'?'done':s==='لم يتم الحل'?'rejected':''}
-function statusBadge(s){return `<span class="status ${statusClass(s)}">${escapeHTML(s)}</span>`}
-function stat(icon,label,value){return `<div class="stat"><div>${icon}</div><small>${label}</small><strong>${value}</strong></div>`}
-
-function updateAll(){
- if(!me())return;
-
- if(isAdmin()){
-  const done=reports.filter(r=>r.status==='تم الحل').length;
-  const pending=reports.filter(r=>r.status==='قيد المراجعة').length;
-  const enrolled=courses.reduce((n,c)=>n+c.enrollments.length,0);
-
-  $('stats').innerHTML=stat('🐛','البلاغات',reports.length)+stat('✅','تم الحل',done)+stat('⏳','قيد المراجعة',pending)+stat('🎓','تسجيلات الدورات',enrolled);
-  $('latest').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).slice(0,4).map(reportCard).join('');
- }else{
-  $('stats').innerHTML='';
-  $('latest').innerHTML='';
- }
-}
-
-function reportCard(r){
- return `<article class="report-card"><div class="report-top"><span class="number">${escapeHTML(r.number)}</span>${statusBadge(r.status)}</div>
- <h3>${escapeHTML(r.title)}</h3><p>${escapeHTML(r.description)}</p>
- <div class="meta"><span>${escapeHTML(r.category)}</span><span>${escapeHTML(r.date)}</span></div>
- <button class="btn small" onclick="details(${r.id})">عرض التفاصيل</button></article>`;
-}
-
-function renderArchive(){
- if(!isAdmin())return;
-
- const q=$('search').value.trim().toLowerCase(),s=$('filterStatus').value;
- const list=reports.filter(r=>(!s||r.status===s)&&(!q||[r.number,r.title,r.category,r.description].join(' ').toLowerCase().includes(q))).sort((a,b)=>b.id-a.id);
-
- $('archiveCount').textContent=list.length+' بلاغ';
- $('archiveList').innerHTML=list.length?list.map(reportCard).join(''):'<div class="empty">لا توجد بلاغات مطابقة.</div>';
-}
-
-function addReport(){
- const title=$('newTitle').value.trim(),category=$('newCategory').value,description=$('newDesc').value.trim(),solution=$('newSolution').value.trim();
-
- if(!title||!description){$('reportMessage').textContent='يرجى كتابة العنوان والوصف.';return}
-
- const id=nextNumber++,u=me();
- reports.push({id,number:'BV-'+id,title,category,description,solution,status:'قيد المراجعة',author:u.username,authorName:u.name,date:new Date().toLocaleDateString('ar-SA')});
-
- persist();updateAll();
- $('newTitle').value='';$('newDesc').value='';$('newSolution').value='';
- $('reportMessage').textContent='تم إرسال البلاغ بنجاح. رقم البلاغ: BV-'+id;
-}
-
-function renderMine(){
- const list=reports.filter(r=>r.author===me().username).sort((a,b)=>b.id-a.id);
- $('myReports').innerHTML=list.length?list.map(reportCard).join(''):'<div class="empty">لم تقم بإضافة أي بلاغ حتى الآن.</div>';
-}
-
-function details(id){
- const r=reports.find(x=>x.id===id);
- if(!r)return;
-
- if(!isAdmin()&&r.author!==me().username){
-  alert('لا يمكنك الاطلاع على بلاغ مستخدم آخر.');
-  return;
- }
-
- $('detailContent').innerHTML=`<div class="number">${escapeHTML(r.number)}</div><h2>${escapeHTML(r.title)}</h2>
- <div class="meta"><span>${escapeHTML(r.category)}</span><span>${escapeHTML(r.date)}</span></div>
- ${statusBadge(r.status)}<hr><h4>وصف المشكلة</h4><p class="muted">${escapeHTML(r.description)}</p>
- <h4>الحل المقترح</h4><p class="muted">${escapeHTML(r.solution||'لا يوجد حل مقترح.')}</p>
- <p class="muted">صاحب البلاغ: ${escapeHTML(r.authorName)}</p>
- ${isAdmin()?`<div class="field"><label>تغيير الحالة</label><select id="detailStatus"><option ${r.status==='قيد المراجعة'?'selected':''}>قيد المراجعة</option><option ${r.status==='تم الحل'?'selected':''}>تم الحل</option><option ${r.status==='لم يتم الحل'?'selected':''}>لم يتم الحل</option></select></div>
- <button class="btn" onclick="updateStatus(${r.id})">حفظ الحالة</button><button class="btn danger" onclick="deleteReport(${r.id})">حذف البلاغ</button>`:''}
- <button class="btn secondary" onclick="go('${isAdmin()?'archive':'mine'}')">العودة</button>`;
-
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- $('details').classList.add('active');
- $('pageTitle').textContent='تفاصيل البلاغ';
-}
-
-function updateStatus(id){
- if(!isAdmin())return;
- const r=reports.find(x=>x.id===id);
- if(!r)return;
- r.status=$('detailStatus').value;
- persist();updateAll();details(id);
-}
-
-function deleteReport(id){
- if(!isAdmin()||!confirm('هل تريد حذف البلاغ؟'))return;
- reports=reports.filter(r=>r.id!==id);
- persist();updateAll();go('admin');
-}
-
-function renderAccount(){
- const u=me();
- $('accountName').textContent=u.name;
- $('accountUser').textContent=u.username;
- $('accountRole').textContent=u.role==='admin'?'مشرف':'مستخدم';
-}
-
-/* الموسوعة */
+function authMode(mode){$('loginForm').classList.toggle('hidden',mode!=='login');$('registerForm').classList.toggle('hidden',mode!=='register');$('loginTab').className=mode==='login'?'btn':'btn secondary';$('registerTab').className=mode==='register'?'btn':'btn secondary';$('authMessage').textContent='';}
+function showAuth(){ $('auth').classList.remove('hidden'); authMode('login'); }
+function closeAuth(){ $('auth').classList.add('hidden'); }
+function login(){const u=$('loginUser').value.trim(),p=$('loginPass').value,user=users.find(x=>x.username===u&&x.password===p);if(!user){$('authMessage').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';return}current={username:user.username};save('bv_current',current);closeAuth();startApp();showToast('أهلًا بعودتك إلى BugVault 💜');}
+function register(){const name=$('regName').value.trim(),username=$('regUser').value.trim(),password=$('regPass').value;if(!name||!username||!password){$('authMessage').textContent='يرجى تعبئة جميع الحقول';return}if(username==='admin'||users.some(u=>u.username===username)){$('authMessage').textContent='اسم المستخدم مستخدم مسبقًا';return}if(password.length<4){$('authMessage').textContent='كلمة المرور يجب ألا تقل عن 4 أحرف';return}users.push({name,username,password,role:'user'});persist();$('loginUser').value=username;$('loginPass').value=password;authMode('login');$('authMessage').textContent='تم إنشاء الحساب. يمكنك تسجيل الدخول.';}
+function startApp(){if(!me()){current=null;localStorage.removeItem('bv_current');refreshVisitorUI();return}updateWelcome();updatePublicStats();const admin=isAdmin();$('userChip').innerHTML=escapeHTML(me().name)+(admin?' · مشرف':'')+' <button class="btn secondary small" onclick="logout()">خروج</button>';$('adminNav').classList.toggle('hidden',!admin);$('adminNavTitle').classList.toggle('hidden',!admin);$('stats').classList.toggle('hidden',!admin);$('latestReportsHead').classList.toggle('hidden',!admin);$('latest').classList.toggle('hidden',!admin);updateAll();refreshPublicSections();}
+function refreshVisitorUI(){ updateWelcome();updatePublicStats(); $('userChip').innerHTML='<button class="btn small" onclick="showAuth()">تسجيل الدخول</button>'; $('adminNav').classList.add('hidden'); $('adminNavTitle').classList.add('hidden'); $('stats').classList.add('hidden'); $('latestReportsHead').classList.add('hidden'); $('latest').classList.add('hidden'); refreshPublicSections(); }
+function refreshPublicSections(){renderEncyclopedia();renderCourses();renderHub();renderArchive();}
+function logout(){current=null;localStorage.removeItem('bv_current');refreshVisitorUI();go('home');showToast('تم تسجيل الخروج، يمكنك مواصلة التصفح كزائر');}
+const titles={home:'الرئيسية',archive:'أرشيف الأخطاء',report:'إضافة بلاغ',mine:'بلاغاتي',encyclopedia:'الموسوعة البرمجية',encyDetail:'تفاصيل الموضوع',courses:'الدورات التدريبية',myCourses:'دوراتي',courseDetail:'تفاصيل الدورة',certificates:'شهاداتي',certificateView:'عرض الشهادة',details:'تفاصيل البلاغ',account:'حسابي',admin:'لوحة المشرف',developerHub:'Developer Hub — مجتمع المطورين'};
+function go(page,button){const publicPages=['home','archive','encyclopedia','encyDetail','courses','courseDetail','developerHub'];if(!me()&&!publicPages.includes(page)){showAuth();return}if(page==='admin'&&!isAdmin()){showAuth();return}if(page==='details'){alert('افتح تفاصيل البلاغ من قائمة بلاغاتك.');return}const allowed=['home','report','mine','encyclopedia','encyDetail','courses','myCourses','courseDetail','certificates','certificateView','details','account','admin','archive','developerHub'];if(!allowed.includes(page))return;if(page==='admin'&&!isAdmin())return;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(page).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(button)button.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});$('pageTitle').textContent=titles[page]||'BugVault';if(page==='archive')renderArchive();if(page==='mine')renderMine();if(page==='encyclopedia')renderEncyclopedia();if(page==='courses')renderCourses();if(page==='myCourses')renderMyCourses();if(page==='certificates')renderCertificates();if(page==='admin')renderAdmin();if(page==='account')renderAccount();if(page==='developerHub')renderHub();}
+function statusClass(s){return s==='تم الحل'||s==='مقبول'||s==='تم التنفيذ'?'done':s==='لم يتم الحل'||s==='مرفوض'?'rejected':''}function statusBadge(s){return `<span class="status ${statusClass(s)}">${escapeHTML(s)}</span>`}function stat(icon,label,value){return `<div class="stat"><div>${icon}</div><small>${label}</small><strong>${value}</strong></div>`}
+function updateAll(){updatePublicStats();if(!me())return;if(isAdmin()){const done=reports.filter(r=>r.status==='تم الحل').length,pending=reports.filter(r=>r.status==='قيد المراجعة').length,enrolled=courses.reduce((n,c)=>n+c.enrollments.length,0);$('stats').innerHTML=stat('🐛','البلاغات',reports.length)+stat('✅','تم الحل',done)+stat('⏳','قيد المراجعة',pending)+stat('🎓','تسجيلات الدورات',enrolled);$('latest').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).slice(0,4).map(reportCard).join('');}else{$('stats').innerHTML='';$('latest').innerHTML='';}}
+function reportCard(r){return `<article class="report-card"><div class="report-top"><span class="number">${escapeHTML(r.number)}</span>${statusBadge(r.status)}</div><h3>${escapeHTML(r.title)}</h3><p>${escapeHTML(r.description)}</p><div class="meta"><span>${escapeHTML(r.category)}</span><span>${escapeHTML(r.date)}</span></div><button class="btn small" onclick="details(${r.id})">عرض التفاصيل</button></article>`;}
+function renderArchive(){const q=$('search').value.trim().toLowerCase(),s=$('filterStatus').value,list=reports.filter(r=>(!s||r.status===s)&&(!q||[r.number,r.title,r.category,r.description].join(' ').toLowerCase().includes(q))).sort((a,b)=>b.id-a.id);$('archiveCount').textContent=list.length+' بلاغ';$('archiveList').innerHTML=list.length?list.map(reportCard).join(''):'<div class="empty">لا توجد بلاغات مطابقة.</div>';}
+function addReport(){if(!me()){showAuth();return}const title=$('newTitle').value.trim(),category=$('newCategory').value,description=$('newDesc').value.trim(),solution=$('newSolution').value.trim();if(!title||!description){$('reportMessage').textContent='يرجى كتابة العنوان والوصف.';return}const id=nextNumber++,u=me();reports.push({id,number:'BV-'+id,title,category,description,solution,status:'قيد المراجعة',author:u.username,authorName:u.name,date:new Date().toLocaleDateString('ar-SA')});persist();updateAll();$('newTitle').value='';$('newDesc').value='';$('newSolution').value='';$('reportMessage').textContent='تم إرسال البلاغ بنجاح. رقم البلاغ: BV-'+id;showToast('وصل بلاغك بنجاح! رقم البلاغ BV-'+id);}
+function renderMine(){const list=reports.filter(r=>r.author===me().username).sort((a,b)=>b.id-a.id);$('myReports').innerHTML=list.length?list.map(reportCard).join(''):'<div class="empty">لم تقم بإضافة أي بلاغ حتى الآن.</div>';}
+function details(id){const r=reports.find(x=>x.id===id);if(!r)return;if(me()&&!isAdmin()&&r.author!==me().username){alert('لا يمكنك الاطلاع على بلاغ مستخدم آخر.');return}$('detailContent').innerHTML=`<div class="number">${escapeHTML(r.number)}</div><h2>${escapeHTML(r.title)}</h2><div class="meta"><span>${escapeHTML(r.category)}</span><span>${escapeHTML(r.date)}</span></div>${statusBadge(r.status)}<hr><h4>وصف المشكلة</h4><p class="muted">${escapeHTML(r.description)}</p><h4>الحل المقترح</h4><p class="muted">${escapeHTML(r.solution||'لا يوجد حل مقترح.')}</p><p class="muted">صاحب البلاغ: ${escapeHTML(r.authorName)}</p>${isAdmin()?`<div class="field"><label>تغيير الحالة</label><select id="detailStatus"><option ${r.status==='قيد المراجعة'?'selected':''}>قيد المراجعة</option><option ${r.status==='تم الحل'?'selected':''}>تم الحل</option><option ${r.status==='لم يتم الحل'?'selected':''}>لم يتم الحل</option></select></div><button class="btn" onclick="updateStatus(${r.id})">حفظ الحالة</button><button class="btn danger" onclick="deleteReport(${r.id})">حذف البلاغ</button>`:''}<button class="btn secondary" onclick="go('${isAdmin()?'archive':(me()?'mine':'archive')}')">العودة</button>`;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$('details').classList.add('active');$('pageTitle').textContent='تفاصيل البلاغ';}
+function updateStatus(id){if(!isAdmin())return;const r=reports.find(x=>x.id===id);if(!r)return;r.status=$('detailStatus').value;persist();updateAll();details(id);}
+function deleteReport(id){if(!isAdmin()||!confirm('هل تريد حذف البلاغ؟'))return;reports=reports.filter(r=>r.id!==id);persist();updateAll();go('admin');}
+function renderAccount(){const u=me();$('accountName').textContent=u.name;$('accountUser').textContent=u.username;$('accountRole').textContent=u.role==='admin'?'مشرف':'مستخدم';}
 const encyclopedia=[
 {id:1,title:'أساسيات Python',lang:'Python',desc:'لغة برمجة سهلة القراءة تستخدم في تطوير التطبيقات وتحليل البيانات.',ex:'print("Hello World")',explain:'الأمر print يعرض النص المكتوب بين علامتي التنصيص.',problem:'SyntaxError',solution:'راجع الأقواس وعلامات التنصيص وطريقة كتابة الأمر.'},
-{id:2,title:'المتغيرات في Python',lang:'Python',desc:'المتغير يخزن قيمة يمكن استخدامها أثناء تشغيل البرنامج.',ex:'name = "Sara"\nage = 20\nprint(name)',explain:'يتم تخزين الاسم والعمر داخل متغيرات ثم طباعة الاسم.',problem:'NameError',solution:'تأكد من كتابة اسم المتغير بشكل صحيح.'},
-{id:3,title:'الشروط في Python',lang:'Python',desc:'تستخدم if لاتخاذ قرار بناءً على شرط معين.',ex:'age = 18\nif age >= 18:\n    print("Allowed")',explain:'إذا كان العمر 18 أو أكثر يتم تنفيذ أمر الطباعة.',problem:'IndentationError',solution:'استخدم المسافات البادئة بشكل صحيح.'},
-{id:4,title:'الحلقات التكرارية في Python',lang:'Python',desc:'تسمح الحلقات بتنفيذ أوامر أكثر من مرة.',ex:'for i in range(5):\n    print(i)',explain:'تكرر الحلقة أمر الطباعة خمس مرات.',problem:'خطأ في التكرار',solution:'راجع حدود الحلقة وقيمة range.'},
-{id:5,title:'أساسيات JavaScript',lang:'JavaScript',desc:'لغة تضيف التفاعل إلى صفحات الويب.',ex:'let name = "Sara";\nconsole.log(name);',explain:'يتم إنشاء متغير ثم عرض قيمته في وحدة التحكم.',problem:'ReferenceError',solution:'تأكد من تعريف المتغير قبل استخدامه.'},
-{id:6,title:'الدوال في JavaScript',lang:'JavaScript',desc:'الدالة مجموعة أوامر يمكن استدعاؤها عند الحاجة.',ex:'function greet() {\n console.log("Hello");\n}\ngreet();',explain:'تم إنشاء دالة ثم استدعاؤها لتنفيذ محتواها.',problem:'TypeError',solution:'تحقق من نوع القيمة التي تستدعي عليها الدالة.'},
-{id:7,title:'أساسيات HTML',lang:'HTML',desc:'تستخدم HTML لبناء هيكل صفحات الويب.',ex:'<h1>Hello</h1>\n<p>Welcome</p>',explain:'h1 ينشئ عنوانًا رئيسيًا وp ينشئ فقرة.',problem:'عدم ظهور العنصر',solution:'تأكد من كتابة الوسم وإغلاقه.'},
-{id:8,title:'الروابط والصور في HTML',lang:'HTML',desc:'تستخدم الوسوم a وimg لإضافة الروابط والصور.',ex:'<a href="https://example.com">Visit</a>\n<img src="photo.jpg" alt="Photo">',explain:'الوسم a ينشئ رابطًا والوسم img يعرض صورة.',problem:'الصورة لا تظهر',solution:'راجع مسار الصورة واسم الملف وامتداده.'},
-{id:9,title:'أساسيات CSS',lang:'CSS',desc:'تستخدم CSS لتنسيق ألوان وحجم وترتيب عناصر صفحات الويب.',ex:'h1 {\n color: purple;\n font-size: 24px;\n}',explain:'يغير المثال لون العنوان وحجم الخط.',problem:'التنسيق لا يظهر',solution:'تأكد من ربط ملف CSS بصفحة HTML.'},
+{id:2,title:'المتغيرات في Python',lang:'Python',desc:'المتغير يخزن قيمة يمكن استخدامها أثناء تشغيل البرنامج.',ex:'name = "Sara"\\nage = 20\\nprint(name)',explain:'يتم تخزين الاسم والعمر داخل متغيرات ثم طباعة الاسم.',problem:'NameError',solution:'تأكد من كتابة اسم المتغير بشكل صحيح.'},
+{id:3,title:'الشروط في Python',lang:'Python',desc:'تستخدم if لاتخاذ قرار بناءً على شرط معين.',ex:'age = 18\\nif age >= 18:\\n    print("Allowed")',explain:'إذا كان العمر 18 أو أكثر يتم تنفيذ أمر الطباعة.',problem:'IndentationError',solution:'استخدم المسافات البادئة بشكل صحيح.'},
+{id:4,title:'الحلقات التكرارية في Python',lang:'Python',desc:'تسمح الحلقات بتنفيذ أوامر أكثر من مرة.',ex:'for i in range(5):\\n    print(i)',explain:'تكرر الحلقة أمر الطباعة خمس مرات.',problem:'خطأ في التكرار',solution:'راجع حدود الحلقة وقيمة range.'},
+{id:5,title:'أساسيات JavaScript',lang:'JavaScript',desc:'لغة تضيف التفاعل إلى صفحات الويب.',ex:'let name = "Sara";\\nconsole.log(name);',explain:'يتم إنشاء متغير ثم عرض قيمته في وحدة التحكم.',problem:'ReferenceError',solution:'تأكد من تعريف المتغير قبل استخدامه.'},
+{id:6,title:'الدوال في JavaScript',lang:'JavaScript',desc:'الدالة مجموعة أوامر يمكن استدعاؤها عند الحاجة.',ex:'function greet() {\\n console.log("Hello");\\n}\\ngreet();',explain:'تم إنشاء دالة ثم استدعاؤها لتنفيذ محتواها.',problem:'TypeError',solution:'تحقق من نوع القيمة التي تستدعي عليها الدالة.'},
+{id:7,title:'أساسيات HTML',lang:'HTML',desc:'تستخدم HTML لبناء هيكل صفحات الويب.',ex:'<h1>Hello</h1>\\n<p>Welcome</p>',explain:'h1 ينشئ عنوانًا رئيسيًا وp ينشئ فقرة.',problem:'عدم ظهور العنصر',solution:'تأكد من كتابة الوسم وإغلاقه.'},
+{id:8,title:'الروابط والصور في HTML',lang:'HTML',desc:'تستخدم الوسوم a وimg لإضافة الروابط والصور.',ex:'<a href="https://example.com">Visit</a>\\n<img src="photo.jpg" alt="Photo">',explain:'الوسم a ينشئ رابطًا والوسم img يعرض صورة.',problem:'الصورة لا تظهر',solution:'راجع مسار الصورة واسم الملف وامتداده.'},
+{id:9,title:'أساسيات CSS',lang:'CSS',desc:'تستخدم CSS لتنسيق ألوان وحجم وترتيب عناصر صفحات الويب.',ex:'h1 {\\n color: purple;\\n font-size: 24px;\\n}',explain:'يغير المثال لون العنوان وحجم الخط.',problem:'التنسيق لا يظهر',solution:'تأكد من ربط ملف CSS بصفحة HTML.'},
 {id:10,title:'خطأ SyntaxError',lang:'أخطاء برمجية',desc:'يظهر عندما تكون صياغة الكود غير صحيحة.',ex:'console.log("Hello";',explain:'في المثال يوجد قوس إغلاق ناقص.',problem:'SyntaxError',solution:'راجع الأقواس والفواصل وعلامات التنصيص.'},
-{id:11,title:'خطأ TypeError',lang:'أخطاء برمجية',desc:'يحدث عند تنفيذ عملية غير مناسبة لنوع القيمة.',ex:'let value = null;\nvalue.toString();',explain:'لا يمكن استدعاء toString على قيمة null.',problem:'TypeError',solution:'تحقق من القيمة قبل استدعاء الدالة.'},
+{id:11,title:'خطأ TypeError',lang:'أخطاء برمجية',desc:'يحدث عند تنفيذ عملية غير مناسبة لنوع القيمة.',ex:'let value = null;\\nvalue.toString();',explain:'لا يمكن استدعاء toString على قيمة null.',problem:'TypeError',solution:'تحقق من القيمة قبل استدعاء الدالة.'},
 {id:12,title:'خطأ ReferenceError',lang:'أخطاء برمجية',desc:'يظهر عند استخدام متغير غير معرّف.',ex:'console.log(userName);',explain:'إذا لم يكن المتغير معرفًا سيظهر الخطأ.',problem:'ReferenceError',solution:'عرّف المتغير أولًا وتأكد من صحة اسمه.'},
-{id:13,title:'خطأ IndentationError',lang:'أخطاء برمجية',desc:'يظهر في Python عند وجود مشكلة في المسافات البادئة.',ex:'if True:\nprint("Hello")',explain:'يجب وضع مسافة بادئة قبل أمر الطباعة.',problem:'IndentationError',solution:'استخدم مسافات بادئة متناسقة.'},
+{id:13,title:'خطأ IndentationError',lang:'أخطاء برمجية',desc:'يظهر في Python عند وجود مشكلة في المسافات البادئة.',ex:'if True:\\nprint("Hello")',explain:'يجب وضع مسافة بادئة قبل أمر الطباعة.',problem:'IndentationError',solution:'استخدم مسافات بادئة متناسقة.'},
 {id:14,title:'خطأ 404',lang:'أخطاء برمجية',desc:'يشير إلى أن الصفحة أو المورد المطلوب غير موجود على الخادم.',ex:'HTTP Status: 404 Not Found',explain:'الخادم لم يعثر على المورد المطلوب.',problem:'404 Not Found',solution:'راجع عنوان الصفحة ومسار الملف.'}
 ];
-
-function renderEncyclopedia(){
- const q=$('encySearch').value.trim().toLowerCase(),f=$('encyFilter').value;
- const list=encyclopedia.filter(x=>(!f||x.lang===f)&&(!q||[x.title,x.lang,x.desc,x.problem].join(' ').toLowerCase().includes(q)));
- $('encyList').innerHTML=list.length?list.map(x=>`<article class="item-card"><span class="pill">${escapeHTML(x.lang)}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.desc)}</p><button class="btn small" onclick="encyDetails(${x.id})">اقرأ الشرح</button></article>`).join(''):'<div class="empty">لا توجد نتائج مطابقة.</div>';
-}
-
-function encyDetails(id){
- const x=encyclopedia.find(v=>v.id===id);
- if(!x)return;
- $('encyDetailContent').innerHTML=`<span class="pill">${escapeHTML(x.lang)}</span><h2>${escapeHTML(x.title)}</h2><p class="muted">${escapeHTML(x.desc)}</p><hr>
- <h3>مثال برمجي</h3><pre class="codebox">${escapeHTML(x.ex)}</pre>
- <h3>شرح المثال</h3><div class="detail-box">${escapeHTML(x.explain)}</div>
- <hr><h3>خطأ مرتبط بالموضوع</h3><p>${escapeHTML(x.problem)}</p><h3>طريقة الحل</h3><div class="detail-box">${escapeHTML(x.solution)}</div>
- <button class="btn secondary" onclick="go('encyclopedia')">العودة للموسوعة</button>`;
- go('encyDetail');
-}
-
-/* الدورات */
-function enrolled(c){return c.enrollments.some(e=>e.username===me().username)}
-
-function renderCourses(){
- const q=$('courseSearch').value.trim().toLowerCase();
- const list=courses.filter(c=>(c.title+' '+c.description+' '+c.level).toLowerCase().includes(q));
- $('courseList').innerHTML=list.length?list.map(c=>{
- const full=c.enrollments.length>=c.seats;
- return `<article class="item-card"><div class="report-top"><span class="pill">${escapeHTML(c.level)}</span><span class="muted">${full?'اكتملت المقاعد':escapeHTML(c.status)}</span></div>
- <h3>${escapeHTML(c.title)}</h3><p>${escapeHTML(c.description)}</p>
- <div class="meta"><span>📅 ${escapeHTML(c.date||'يحدد لاحقًا')}</span><span>⏱ ${escapeHTML(c.duration)}</span></div>
- <div class="meta"><span>👥 ${c.enrollments.length} / ${c.seats} مقعد</span></div>
- <button class="btn small" onclick="courseDetails(${c.id})">تفاصيل الدورة</button></article>`;
- }).join(''):'<div class="empty">لا توجد دورات مطابقة.</div>';
-}
-
-function courseDetails(id){
- const c=courses.find(x=>x.id===id);
- if(!c)return;
- const full=c.enrollments.length>=c.seats,joined=enrolled(c);
- $('courseDetailContent').innerHTML=`<span class="pill">${escapeHTML(c.level)}</span><h2>${escapeHTML(c.title)}</h2><p class="muted">${escapeHTML(c.description)}</p><hr>
- <p>📅 تاريخ الدورة: <strong>${escapeHTML(c.date||'يحدد لاحقًا')}</strong></p><p>⏱ المدة: <strong>${escapeHTML(c.duration)}</strong></p>
- <p>👥 المقاعد: <strong>${c.enrollments.length} من ${c.seats}</strong></p>
- ${joined?'<span class="status done">أنت مسجل في هذه الدورة</span>':full?'<span class="status rejected">اكتملت المقاعد</span>':`<button class="btn" onclick="enroll(${c.id})">التسجيل في الدورة</button>`}
- ${joined?`<button class="btn danger" onclick="cancelEnrollment(${c.id})">إلغاء التسجيل</button>`:''}
- <button class="btn secondary" onclick="go('courses')">العودة للدورات</button>`;
- go('courseDetail');
-}
-
-function enroll(id){
- const c=courses.find(x=>x.id===id);
- if(!c)return;
- if(enrolled(c)){alert('أنت مسجل بالفعل');return}
- if(c.enrollments.length>=c.seats){alert('اكتملت المقاعد');return}
- c.enrollments.push({username:me().username,name:me().name,attended:false,completed:false,certificateNo:null,issueDate:null});
- persist();updateAll();courseDetails(id);alert('تم تسجيلك في الدورة بنجاح!');
-}
-
-function cancelEnrollment(id){
- const c=courses.find(x=>x.id===id);
- if(!c)return;
- const e=c.enrollments.find(x=>x.username===me().username);
- if(e?.completed){alert('لا يمكن إلغاء التسجيل بعد إصدار الشهادة.');return}
- if(!confirm('هل تريد إلغاء تسجيلك؟'))return;
- c.enrollments=c.enrollments.filter(x=>x.username!==me().username);
- persist();updateAll();courseDetails(id);
-}
-
-function renderMyCourses(){
- const list=courses.filter(c=>enrolled(c));
- $('myCourseList').innerHTML=list.length?list.map(c=>{
- const e=c.enrollments.find(x=>x.username===me().username);
- return `<article class="item-card"><h3>${escapeHTML(c.title)}</h3><p>📅 ${escapeHTML(c.date||'يحدد لاحقًا')}</p>
- <p>الحضور: ${e.attended?'<span class="status done">تم تسجيل الحضور</span>':'<span class="status">لم يسجل الحضور</span>'}</p>
- <p>إتمام الدورة: ${e.completed?'<span class="status done">مكتملة</span>':'<span class="status">لم تكتمل بعد</span>'}</p>
- <button class="btn small" onclick="courseDetails(${c.id})">تفاصيل الدورة</button></article>`;
- }).join(''):'<div class="empty">لم تسجل في أي دورة حتى الآن.</div>';
-}
-
-/* نظام الشهادات */
-function renderCertificates(){
- const list=[];
- courses.forEach(c=>c.enrollments.forEach(e=>{
- if(e.username===me().username&&e.completed&&e.certificateNo)list.push({course:c,enrollment:e});
- }));
- $('certificateList').innerHTML=list.length?list.map(x=>`
- <article class="item-card"><h3>🏆 ${escapeHTML(x.course.title)}</h3>
- <p>رقم الشهادة: <span class="number">${escapeHTML(x.enrollment.certificateNo)}</span></p>
- <p>تاريخ الإصدار: ${escapeHTML(x.enrollment.issueDate)}</p>
- <span class="status done">شهادة معتمدة من المشرف</span>
- <div style="margin-top:12px"><button class="btn" onclick="viewCertificate(${x.course.id})">عرض الشهادة</button></div>
- </article>`).join(''):'<div class="empty">لا توجد شهادات حتى الآن. أكمل دورة واحضرها وانتظر اعتماد المشرف.</div>';
-}
-
-function viewCertificate(courseId){
- const c=courses.find(x=>x.id===courseId);
- if(!c)return;
- const e=c.enrollments.find(x=>x.username===me().username&&x.completed&&x.certificateNo);
- if(!e){alert('لا توجد شهادة لهذه الدورة.');return}
- $('printArea').innerHTML=`<div class="certificate">
- <div class="cert-logo">BugVault</div>
- <div style="font-size:48px;margin:12px">🏆</div>
- <h1>شهادة إتمام دورة تدريبية</h1>
- <p>تشهد منصة BugVault بأن المتدرب / المتدربة</p>
- <div class="cert-name">${escapeHTML(e.name)}</div>
- <p>قد أتم بنجاح الدورة التدريبية</p>
- <h2 style="color:#7045bb">${escapeHTML(c.title)}</h2>
- <p>بمستوى ${escapeHTML(c.level)}، ومدة ${escapeHTML(c.duration)}.</p>
- <p>وذلك تقديرًا لجهوده ومشاركته في التعلم والتطوير البرمجي.</p>
- <div class="cert-footer">
- <div>تاريخ الإصدار<br><strong>${escapeHTML(e.issueDate)}</strong></div>
- <div>اعتماد المنصة<br><strong>BugVault</strong></div>
- </div>
- <p class="cert-number">Certificate No: ${escapeHTML(e.certificateNo)}</p>
- </div>`;
- go('certificateView');
-}
-
-/* لوحة المشرف */
-function renderAdmin(){
- if(!isAdmin())return;
-
- const done=reports.filter(r=>r.status==='تم الحل').length;
- const pending=reports.filter(r=>r.status==='قيد المراجعة').length;
- const enrolledCount=courses.reduce((n,c)=>n+c.enrollments.length,0);
- const certCount=courses.reduce((n,c)=>n+c.enrollments.filter(e=>e.completed).length,0);
-
- $('adminStats').innerHTML=stat('📚','البلاغات',reports.length)+stat('✅','تم الحل',done)+stat('🎓','التسجيلات',enrolledCount)+stat('🏆','الشهادات',certCount);
-
- $('adminTable').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).map(r=>`<tr><td class="number">${escapeHTML(r.number)}</td><td>${escapeHTML(r.title)}</td><td>${escapeHTML(r.authorName)}</td><td>${statusBadge(r.status)}</td><td><button class="btn small" onclick="details(${r.id})">تفاصيل</button><button class="btn danger small" onclick="deleteReport(${r.id})">حذف</button></td></tr>`).join('');
-
- $('adminCourses').innerHTML=courses.map(c=>`<tr><td>${escapeHTML(c.title)}</td><td>${escapeHTML(c.date||'—')}</td><td>${c.enrollments.length} / ${c.seats}</td><td><button class="btn small" onclick="adminCourse(${c.id})">المشاركون</button><button class="btn danger small" onclick="deleteCourse(${c.id})">حذف</button></td></tr>`).join('');
-}
-
-function addCourse(){
- if(!isAdmin())return;
-
- const title=$('courseTitle').value.trim(),description=$('courseDesc').value.trim(),date=$('courseDate').value,duration=$('courseDuration').value.trim(),seats=Number($('courseSeats').value),level=$('courseLevel').value;
-
- if(!title||!description||!date||!duration||!seats||seats<1){$('courseMessage').textContent='يرجى تعبئة جميع بيانات الدورة.';return}
-
- courses.push({id:Date.now(),title,description,date,duration,seats,level,status:'متاحة',enrollments:[]});
- persist();updateAll();renderAdmin();
-
- $('courseTitle').value='';$('courseDesc').value='';$('courseDate').value='';$('courseDuration').value='';$('courseSeats').value=20;
- $('courseMessage').textContent='تمت إضافة الدورة بنجاح.';
-}
-
-function adminCourse(id){
- if(!isAdmin())return;
- const c=courses.find(x=>x.id===id);
- if(!c)return;
-
- const rows=c.enrollments.map(e=>{
- const user=encodeURIComponent(e.username);
- let action='';
-
- if(e.completed)action='<span class="status done">اكتملت وصُدرت الشهادة</span>';
- else if(e.attended)action=`<button class="btn success small" onclick="completeCourse(${id},'${user}')">اعتماد الإتمام وإصدار الشهادة</button>`;
- else action='<span class="status">بانتظار تسجيل الحضور</span>';
-
- return `<tr><td>${escapeHTML(e.name)}</td><td>${escapeHTML(e.username)}</td>
- <td>${e.attended?'<span class="status done">حاضر</span>':'<span class="status">لم يحضر</span>'}</td>
- <td><button class="btn small ${e.attended?'secondary':'success'}" onclick="toggleAttendance(${id},'${user}')">${e.attended?'إلغاء الحضور':'تسجيل الحضور'}</button></td>
- <td>${action}</td></tr>`;
- }).join('');
-
- $('attendanceArea').innerHTML=`<div class="card"><h3>${escapeHTML(c.title)}</h3><p class="muted">عدد المسجلين: ${c.enrollments.length}</p>
- <div class="table-wrap"><table><thead><tr><th>الاسم</th><th>المستخدم</th><th>الحضور</th><th>تغيير الحضور</th><th>إتمام الدورة</th></tr></thead>
- <tbody>${rows||'<tr><td colspan="5">لا يوجد مسجلون في هذه الدورة.</td></tr>'}</tbody></table></div></div>`;
-
- $('attendanceArea').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function toggleAttendance(id,encodedUser){
- if(!isAdmin())return;
- const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);
- if(!c)return;
- const e=c.enrollments.find(x=>x.username===username);
- if(!e)return;
- if(e.completed&&!e.attended){alert('لا يمكن تغيير الحضور بعد إصدار الشهادة.');return}
- e.attended=!e.attended;
- persist();updateAll();renderAdmin();adminCourse(id);
-}
-
-function completeCourse(id,encodedUser){
- if(!isAdmin())return;
- const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);
- if(!c)return;
- const e=c.enrollments.find(x=>x.username===username);
- if(!e)return;
- if(!e.attended){alert('يجب تسجيل الحضور أولًا.');return}
- if(e.completed){alert('تم اعتماد إتمام هذه الدورة مسبقًا.');return}
- e.completed=true;
- e.certificateNo='BV-CERT-'+Date.now().toString().slice(-8)+'-'+Math.floor(Math.random()*90+10);
- e.issueDate=new Date().toLocaleDateString('ar-SA');
- persist();updateAll();renderAdmin();adminCourse(id);
- alert('تم اعتماد إتمام الدورة وإصدار الشهادة بنجاح!');
-}
-
-function deleteCourse(id){
- if(!isAdmin()||!confirm('هل تريد حذف هذه الدورة وجميع تسجيلاتها؟'))return;
- courses=courses.filter(c=>c.id!==id);
- persist();updateAll();renderAdmin();
-}
-
-if(current&&me())startApp();
-else{
- $('auth').classList.remove('hidden');
- $('app').classList.add('hidden');
-}
+function renderEncyclopedia(){const q=$('encySearch').value.trim().toLowerCase(),f=$('encyFilter').value,list=encyclopedia.filter(x=>(!f||x.lang===f)&&(!q||[x.title,x.lang,x.desc,x.problem].join(' ').toLowerCase().includes(q)));$('encyList').innerHTML=list.length?list.map(x=>`<article class="item-card"><span class="pill">${escapeHTML(x.lang)}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.desc)}</p><button class="btn small" onclick="encyDetails(${x.id})">اقرأ الشرح</button></article>`).join(''):'<div class="empty">لا توجد نتائج مطابقة.</div>';}
+function encyDetails(id){const x=encyclopedia.find(v=>v.id===id);if(!x)return;$('encyDetailContent').innerHTML=`<span class="pill">${escapeHTML(x.lang)}</span><h2>${escapeHTML(x.title)}</h2><p class="muted">${escapeHTML(x.desc)}</p><hr><h3>مثال برمجي</h3><pre class="codebox">${escapeHTML(x.ex)}</pre><h3>شرح المثال</h3><div class="detail-box">${escapeHTML(x.explain)}</div><hr><h3>خطأ مرتبط بالموضوع</h3><p>${escapeHTML(x.problem)}</p><h3>طريقة الحل</h3><div class="detail-box">${escapeHTML(x.solution)}</div><button class="btn secondary" onclick="go('encyclopedia')">العودة للموسوعة</button>`;go('encyDetail');}
+function enrolled(c){return !!me()&&c.enrollments.some(e=>e.username===me().username)}
+function renderCourses(){const q=$('courseSearch').value.trim().toLowerCase(),list=courses.filter(c=>(c.title+' '+c.description+' '+c.level).toLowerCase().includes(q));$('courseList').innerHTML=list.length?list.map(c=>{const full=c.enrollments.length>=c.seats;return `<article class="item-card"><div class="report-top"><span class="pill">${escapeHTML(c.level)}</span><span class="muted">${full?'اكتملت المقاعد':escapeHTML(c.status)}</span></div><h3>${escapeHTML(c.title)}</h3><p>${escapeHTML(c.description)}</p><div class="meta"><span>📅 ${escapeHTML(c.date||'يحدد لاحقًا')}</span><span>⏱ ${escapeHTML(c.duration)}</span></div><div class="meta"><span>👥 ${c.enrollments.length} / ${c.seats} مقعد</span></div><button class="btn small" onclick="courseDetails(${c.id})">تفاصيل الدورة</button></article>`}).join(''):'<div class="empty">لا توجد دورات مطابقة.</div>';}
+function courseDetails(id){const c=courses.find(x=>x.id===id);if(!c)return;const full=c.enrollments.length>=c.seats,joined=enrolled(c);$('courseDetailContent').innerHTML=`<span class="pill">${escapeHTML(c.level)}</span><h2>${escapeHTML(c.title)}</h2><p class="muted">${escapeHTML(c.description)}</p><hr><p>📅 تاريخ الدورة: <strong>${escapeHTML(c.date||'يحدد لاحقًا')}</strong></p><p>⏱ المدة: <strong>${escapeHTML(c.duration)}</strong></p><p>👥 المقاعد: <strong>${c.enrollments.length} من ${c.seats}</strong></p>${joined?'<span class="status done">أنت مسجل في هذه الدورة</span>':full?'<span class="status rejected">اكتملت المقاعد</span>':`<button class="btn" onclick="enroll(${c.id})">التسجيل في الدورة</button>`}${joined?`<button class="btn danger" onclick="cancelEnrollment(${c.id})">إلغاء التسجيل</button>`:''}<button class="btn secondary" onclick="go('courses')">العودة للدورات</button>`;go('courseDetail');}
+function enroll(id){if(!me()){showAuth();return}const c=courses.find(x=>x.id===id);if(!c)return;if(enrolled(c)){alert('أنت مسجل بالفعل');return}if(c.enrollments.length>=c.seats){alert('اكتملت المقاعد');return}c.enrollments.push({username:me().username,name:me().name,attended:false,completed:false,certificateNo:null,issueDate:null});persist();updateAll();courseDetails(id);alert('تم تسجيلك في الدورة بنجاح!');}
+function cancelEnrollment(id){if(!me()){showAuth();return}const c=courses.find(x=>x.id===id);if(!c)return;const e=c.enrollments.find(x=>x.username===me().username);if(e?.completed){alert('لا يمكن إلغاء التسجيل بعد إصدار الشهادة.');return}if(!confirm('هل تريد إلغاء تسجيلك؟'))return;c.enrollments=c.enrollments.filter(x=>x.username!==me().username);persist();updateAll();courseDetails(id);}
+function renderMyCourses(){if(!me())return;const list=courses.filter(c=>enrolled(c));$('myCourseList').innerHTML=list.length?list.map(c=>{const e=c.enrollments.find(x=>x.username===me().username);return `<article class="item-card"><h3>${escapeHTML(c.title)}</h3><p>📅 ${escapeHTML(c.date||'يحدد لاحقًا')}</p><p>الحضور: ${e.attended?'<span class="status done">تم تسجيل الحضور</span>':'<span class="status">لم يسجل الحضور</span>'}</p><p>إتمام الدورة: ${e.completed?'<span class="status done">مكتملة</span>':'<span class="status">لم تكتمل بعد</span>'}</p><button class="btn small" onclick="courseDetails(${c.id})">تفاصيل الدورة</button></article>`}).join(''):'<div class="empty">لم تسجل في أي دورة حتى الآن.</div>';}
+function renderCertificates(){if(!me())return;const list=[];courses.forEach(c=>c.enrollments.forEach(e=>{if(e.username===me().username&&e.completed&&e.certificateNo)list.push({course:c,enrollment:e})}));$('certificateList').innerHTML=list.length?list.map(x=>`<article class="item-card"><h3>🏆 ${escapeHTML(x.course.title)}</h3><p>رقم الشهادة: <span class="number">${escapeHTML(x.enrollment.certificateNo)}</span></p><p>تاريخ الإصدار: ${escapeHTML(x.enrollment.issueDate)}</p><span class="status done">شهادة معتمدة من المشرف</span><div style="margin-top:12px"><button class="btn" onclick="viewCertificate(${x.course.id})">عرض الشهادة</button></div></article>`).join(''):'<div class="empty">لا توجد شهادات حتى الآن. أكمل دورة واحضرها وانتظر اعتماد المشرف.</div>';}
+function viewCertificate(courseId){const c=courses.find(x=>x.id===courseId);if(!c)return;const e=c.enrollments.find(x=>x.username===me().username&&x.completed&&x.certificateNo);if(!e){alert('لا توجد شهادة لهذه الدورة.');return}$('printArea').innerHTML=`<div class="certificate"><div class="cert-logo">BugVault</div><div style="font-size:48px;margin:12px">🏆</div><h1>شهادة إتمام دورة تدريبية</h1><p>تشهد منصة BugVault بأن المتدرب / المتدربة</p><div class="cert-name">${escapeHTML(e.name)}</div><p>قد أتم بنجاح الدورة التدريبية</p><h2 style="color:#7045bb">${escapeHTML(c.title)}</h2><p>بمستوى ${escapeHTML(c.level)}، ومدة ${escapeHTML(c.duration)}.</p><p>وذلك تقديرًا لجهوده ومشاركته في التعلم والتطوير البرمجي.</p><div class="cert-footer"><div>تاريخ الإصدار<br><strong>${escapeHTML(e.issueDate)}</strong></div><div>اعتماد المنصة<br><strong>BugVault</strong></div></div><p class="cert-number">Certificate No: ${escapeHTML(e.certificateNo)}</p></div>`;go('certificateView');}
+function renderAdmin(){if(!isAdmin())return;const done=reports.filter(r=>r.status==='تم الحل').length,pending=reports.filter(r=>r.status==='قيد المراجعة').length,enrolledCount=courses.reduce((n,c)=>n+c.enrollments.length,0),certCount=courses.reduce((n,c)=>n+c.enrollments.filter(e=>e.completed).length,0);$('adminStats').innerHTML=stat('📚','البلاغات',reports.length)+stat('✅','تم الحل',done)+stat('🎓','التسجيلات',enrolledCount)+stat('🏆','الشهادات',certCount);$('adminTable').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).map(r=>`<tr><td class="number">${escapeHTML(r.number)}</td><td>${escapeHTML(r.title)}</td><td>${escapeHTML(r.authorName)}</td><td>${statusBadge(r.status)}</td><td><button class="btn small" onclick="details(${r.id})">تفاصيل</button><button class="btn danger small" onclick="deleteReport(${r.id})">حذف</button></td></tr>`).join('');$('adminCourses').innerHTML=courses.map(c=>`<tr><td>${escapeHTML(c.title)}</td><td>${escapeHTML(c.date||'—')}</td><td>${c.enrollments.length} / ${c.seats}</td><td><button class="btn small" onclick="adminCourse(${c.id})">المشاركون</button><button class="btn danger small" onclick="deleteCourse(${c.id})">حذف</button></td></tr>`).join('');renderAdminHub();}
+function addCourse(){if(!isAdmin())return;const title=$('courseTitle').value.trim(),description=$('courseDesc').value.trim(),date=$('courseDate').value,duration=$('courseDuration').value.trim(),seats=Number($('courseSeats').value),level=$('courseLevel').value;if(!title||!description||!date||!duration||!seats||seats<1){$('courseMessage').textContent='يرجى تعبئة جميع بيانات الدورة.';return}courses.push({id:Date.now(),title,description,date,duration,seats,level,status:'متاحة',enrollments:[]});persist();updateAll();renderAdmin();$('courseTitle').value='';$('courseDesc').value='';$('courseDate').value='';$('courseDuration').value='';$('courseSeats').value=20;$('courseMessage').textContent='تمت إضافة الدورة بنجاح.';showToast('تمت إضافة الدورة بنجاح');}
+function adminCourse(id){if(!isAdmin())return;const c=courses.find(x=>x.id===id);if(!c)return;const rows=c.enrollments.map(e=>{const user=encodeURIComponent(e.username);let action='';if(e.completed)action='<span class="status done">اكتملت وصُدرت الشهادة</span>';else if(e.attended)action=`<button class="btn success small" onclick="completeCourse(${id},'${user}')">اعتماد الإتمام وإصدار الشهادة</button>`;else action='<span class="status">بانتظار تسجيل الحضور</span>';return `<tr><td>${escapeHTML(e.name)}</td><td>${escapeHTML(e.username)}</td><td>${e.attended?'<span class="status done">حاضر</span>':'<span class="status">لم يحضر</span>'}</td><td><button class="btn small ${e.attended?'secondary':'success'}" onclick="toggleAttendance(${id},'${user}')">${e.attended?'إلغاء الحضور':'تسجيل الحضور'}</button></td><td>${action}</td></tr>`}).join('');$('attendanceArea').innerHTML=`<div class="card"><h3>${escapeHTML(c.title)}</h3><p class="muted">عدد المسجلين: ${c.enrollments.length}</p><div class="table-wrap"><table><thead><tr><th>الاسم</th><th>المستخدم</th><th>الحضور</th><th>تغيير الحضور</th><th>إتمام الدورة</th></tr></thead><tbody>${rows||'<tr><td colspan="5">لا يوجد مسجلون في هذه الدورة.</td></tr>'}</tbody></table></div></div>`;$('attendanceArea').scrollIntoView({behavior:'smooth',block:'start'});}
+function toggleAttendance(id,encodedUser){if(!isAdmin())return;const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);if(!c)return;const e=c.enrollments.find(x=>x.username===username);if(!e)return;if(e.completed&&!e.attended){alert('لا يمكن تغيير الحضور بعد إصدار الشهادة.');return}e.attended=!e.attended;persist();updateAll();renderAdmin();adminCourse(id);}
+function completeCourse(id,encodedUser){if(!isAdmin())return;const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);if(!c)return;const e=c.enrollments.find(x=>x.username===username);if(!e)return;if(!e.attended){alert('يجب تسجيل الحضور أولًا.');return}if(e.completed){alert('تم اعتماد إتمام هذه الدورة مسبقًا.');return}e.completed=true;e.certificateNo='BV-CERT-'+Date.now().toString().slice(-8)+'-'+Math.floor(Math.random()*90+10);e.issueDate=new Date().toLocaleDateString('ar-SA');persist();updateAll();renderAdmin();adminCourse(id);alert('تم اعتماد إتمام الدورة وإصدار الشهادة بنجاح!');}
+function deleteCourse(id){if(!isAdmin()||!confirm('هل تريد حذف هذه الدورة وجميع تسجيلاتها؟'))return;courses=courses.filter(c=>c.id!==id);persist();updateAll();renderAdmin();}
+function openHubForm(type){if(!me()){showAuth();return}$('hubFormWrap').classList.remove('hidden');$('hubType').value=type;$('hubFormTitle').textContent=type;$('hubMessage').textContent='';$('hubTitle').value='';$('hubDescription').value='';$('hubCode').value='';$('hubFormWrap').scrollIntoView({behavior:'smooth',block:'start'});}
+function closeHubForm(){$('hubFormWrap').classList.add('hidden');}
+function submitHubPost(){if(!me()){showAuth();return;}const type=$('hubType').value,title=$('hubTitle').value.trim(),category=$('hubCategory').value,description=$('hubDescription').value.trim(),code=$('hubCode').value.trim();if(!title||!description){$('hubMessage').textContent='يرجى كتابة عنوان المشاركة والتفاصيل.';return}if(type==='مشاركة كود'&&!code){$('hubMessage').textContent='أضيفي الكود في خانة الكود قبل النشر.';return}const u=me();hubPosts.unshift({id:nextHubId++,type,title,category,description,code,author:u.username,authorName:u.name,date:new Date().toLocaleDateString('ar-SA'),status:'قيد المراجعة'});persist();$('hubMessage').textContent='تم إرسال مشاركتك، وستظهر في المجتمع بعد اعتمادها من المشرف.';showToast('شكرًا لمساهمتك! وصلت مشاركتك للمراجعة 💜');$('hubTitle').value='';$('hubDescription').value='';$('hubCode').value='';renderHub();}
+function hubTypeIcon(t){return t==='مساعدة مقدمة'?'🙌':t==='طلب مساعدة'?'🆘':t==='مشاركة كود'?'💻':'💡';}
+function renderHub(){const q=$('hubSearch').value.trim().toLowerCase(),f=$('hubFilter').value;const visible=hubPosts.filter(p=>(isAdmin()||p.status==='مقبول'||p.status==='قيد التنفيذ'||p.status==='تم التنفيذ'||(me()&&p.author===me().username))&&(!f||p.type===f)&&(!q||[p.title,p.description,p.category,p.authorName,p.type].join(' ').toLowerCase().includes(q)));$('hubStats').innerHTML=stat('🤝','المشاركات',hubPosts.length)+stat('🙌','مساعدات',hubPosts.filter(p=>p.type==='مساعدة مقدمة').length)+stat('🆘','طلبات مساعدة',hubPosts.filter(p=>p.type==='طلب مساعدة').length)+stat('💡','اقتراحات',hubPosts.filter(p=>p.type==='اقتراح تطوير').length);$('hubCount').textContent=visible.length+' مشاركة';$('hubList').innerHTML=visible.length?visible.map(p=>`<article class="item-card"><div class="report-top"><span class="pill">${hubTypeIcon(p.type)} ${escapeHTML(p.type)}</span>${statusBadge(p.status)}</div><h3>${escapeHTML(p.title)}</h3><p>${escapeHTML(p.description)}</p>${p.code?`<pre class="post-code">${escapeHTML(p.code)}</pre>`:''}<div class="meta"><span>${escapeHTML(p.category)}</span><span>${escapeHTML(p.authorName)}</span><span>${escapeHTML(p.date)}</span></div>${(me()&&p.author===me().username)||isAdmin()?`<button class="btn danger small" onclick="deleteHubPost(${p.id})">حذف المشاركة</button>`:''}</article>`).join(''):'<div class="empty">لا توجد مشاركات مطابقة حاليًا. كن أول من يشارك!</div>';}
+function deleteHubPost(id){const p=hubPosts.find(x=>x.id===id);if(!p||(!isAdmin()&&p.author!==me().username))return;if(!confirm('هل تريد حذف هذه المشاركة؟'))return;hubPosts=hubPosts.filter(x=>x.id!==id);persist();renderHub();if(isAdmin())renderAdminHub();}
+function renderAdminHub(){if(!isAdmin())return;$('adminHubTable').innerHTML=hubPosts.length?hubPosts.map(p=>`<tr><td>${escapeHTML(p.title)}</td><td>${escapeHTML(p.type)}</td><td>${escapeHTML(p.authorName)}</td><td><select id="hubStatus${p.id}" onchange="updateHubStatus(${p.id},this.value)"><option ${p.status==='قيد المراجعة'?'selected':''}>قيد المراجعة</option><option ${p.status==='مقبول'?'selected':''}>مقبول</option><option ${p.status==='قيد التنفيذ'?'selected':''}>قيد التنفيذ</option><option ${p.status==='تم التنفيذ'?'selected':''}>تم التنفيذ</option><option ${p.status==='مرفوض'?'selected':''}>مرفوض</option></select></td><td><button class="btn danger small" onclick="deleteHubPost(${p.id})">حذف</button></td></tr>`).join(''):'<tr><td colspan="5">لا توجد مشاركات حتى الآن.</td></tr>';}
+function updateHubStatus(id,status){if(!isAdmin())return;const p=hubPosts.find(x=>x.id===id);if(!p)return;p.status=status;persist();renderAdminHub();renderHub();}
+if(current&&me())startApp();else{current=null;refreshVisitorUI();}
 </script>
 </body>
 </html>
