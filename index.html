@@ -54,6 +54,95 @@ input,textarea,select{width:100%;background:#100d18;border:1px solid var(--borde
 
 @media(max-width:850px){.sidebar{position:relative;width:100%;height:auto;bottom:auto;padding:12px}.tagline,.nav-title{display:none}.nav{display:flex;overflow-x:auto;gap:4px}.nav button{white-space:nowrap;width:auto;padding:9px;font-size:12px}.main{margin:0;padding:16px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.topbar h2{font-size:18px}}
 @media print{body{background:white!important}body *{visibility:hidden!important}#printArea,#printArea *{visibility:visible!important}#printArea{position:absolute;top:0;left:0;width:100%;margin:0;padding:20px}.certificate{margin:0 auto;max-width:none;min-height:500px}.no-print{display:none!important}}
+
+
+/* BugVault responsive layout: phones, tablets, laptops and wide screens */
+html, body { width:100%; max-width:100%; overflow-x:hidden; }
+body { min-width:0; }
+#app, .main, .sidebar, .page, .hero, .card, .item-card, .report-card { min-width:0; }
+img, video, iframe, canvas { max-width:100%; }
+button, input, textarea, select { max-width:100%; }
+.grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.quick-search { min-width:0; }
+.quick-search input { min-width:0; }
+.table-wrap { max-width:100%; }
+.codebox, .post-code { max-width:100%; overflow-x:auto; overflow-wrap:anywhere; }
+
+@media (min-width:851px) and (max-width:1100px) {
+  .sidebar { width:215px; padding:18px 12px; }
+  .main { margin-right:215px; padding:22px; }
+  .nav button { font-size:12px; padding:9px 10px; }
+}
+
+@media (max-width:850px) {
+  .sidebar {
+    position:relative; inset:auto; width:100%; height:auto;
+    padding:14px clamp(12px,3vw,22px);
+    border-left:0; border-bottom:1px solid var(--border);
+    overflow:visible;
+  }
+  .logo { margin:0 4px; font-size:23px; }
+  .tagline { display:block; margin:0 4px 12px; }
+  .nav-title { display:none; }
+  .sidebar > .nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; overflow:visible; }
+  .sidebar > .nav button {
+    width:100%; min-width:0; white-space:normal; text-align:center;
+    margin:0; padding:10px 7px; line-height:1.5; font-size:12px;
+    border:1px solid rgba(255,255,255,.045);
+  }
+  .sidebar > .nav button.active { border-right:1px solid var(--purple); }
+  .main { width:100%; max-width:none; margin:0; padding:clamp(12px,3vw,22px); }
+  .topbar { flex-wrap:wrap; align-items:center; }
+  .topbar h2 { min-width:0; }
+  .user-chip { max-width:100%; overflow-wrap:anywhere; }
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+@media (max-width:600px) {
+  .sidebar { padding:12px; }
+  .logo { font-size:21px; }
+  .tagline { font-size:11px; }
+  .main { padding:12px; }
+  .topbar { gap:8px; margin-bottom:16px; }
+  .topbar h2 { font-size:17px; }
+  .user-chip { font-size:11px; padding:6px 8px; }
+  .hero { padding:19px; border-radius:15px; }
+  .hero h1 { font-size:21px; line-height:1.55; }
+  .hero p { font-size:13px; line-height:1.9; }
+  .hero .btn { margin:4px 0; }
+  .hero-meta { gap:6px; }
+  .hero-meta span { font-size:10px; }
+  .grid { grid-template-columns:minmax(0,1fr); }
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .stat { padding:12px; }
+  .stat strong { font-size:21px; }
+  .quick-search { flex-direction:column; align-items:stretch; }
+  .quick-search .btn { width:100%; }
+  .section-head { align-items:flex-start; flex-wrap:wrap; }
+  .hub-intro { padding:16px; }
+  .auth { padding:12px; }
+  .auth-box { padding:19px; }
+  .certificate { padding:18px; border-width:5px; }
+  .certificate h1 { font-size:24px; }
+  .certificate .cert-name { font-size:21px; }
+  .cert-footer { flex-wrap:wrap; }
+}
+
+@media (max-width:360px) {
+  .sidebar > .nav { grid-template-columns:minmax(0,1fr); }
+  .stats { grid-template-columns:minmax(0,1fr); }
+  .hero { padding:15px; }
+  .hero h1 { font-size:19px; }
+  .main { padding:10px; }
+  .auth-box { padding:15px; }
+}
+
+@media (min-width:1200px) {
+  .main { margin-left:auto; margin-right:240px; }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
 </style>
 </head>
 <body>
@@ -72,7 +161,7 @@ input,textarea,select{width:100%;background:#100d18;border:1px solid var(--borde
 <button onclick="go('report',this)">＋ إضافة بلاغ</button><button onclick="go('mine',this)">▣ بلاغاتي</button><button onclick="go('encyclopedia',this)">📚 الموسوعة البرمجية</button>
 <button onclick="go('courses',this)">🎓 الدورات التدريبية</button><button onclick="go('myCourses',this)">📖 دوراتي</button><button onclick="go('certificates',this)">🏆 شهاداتي</button>
 <button onclick="go('developerHub',this)">🤝 Developer Hub</button><button onclick="go('account',this)">♙ حسابي</button></nav>
-<div class="nav-title hidden" id="adminNavTitle">الإدارة</div><nav class="nav"><button id="adminNav" class="hidden" onclick="go('admin',this)">⚙ لوحة المشرف</button><button onclick="logout()">↪ تسجيل الخروج</button></nav>
+<div class="nav-title hidden" id="adminNavTitle">الإدارة</div><nav class="nav"><button id="adminNav" class="hidden" onclick="go('admin',this)">⚙ لوحة المشرف</button><button id="logoutNav" class="hidden" onclick="logout()">↪ تسجيل الخروج</button></nav>
 </aside>
 <main class="main"><header class="topbar"><h2 id="pageTitle">الرئيسية</h2><div class="user-chip" id="userChip"><button class="btn small" onclick="showAuth()">تسجيل الدخول</button></div></header>
 <section id="home" class="page active"><div class="hero">
@@ -197,8 +286,8 @@ function showAuth(){ $('auth').classList.remove('hidden'); authMode('login'); }
 function closeAuth(){ $('auth').classList.add('hidden'); }
 function login(){const u=$('loginUser').value.trim(),p=$('loginPass').value,user=users.find(x=>x.username===u&&x.password===p);if(!user){$('authMessage').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';return}current={username:user.username};save('bv_current',current);closeAuth();startApp();showToast('أهلًا بعودتك إلى BugVault 💜');}
 function register(){const name=$('regName').value.trim(),username=$('regUser').value.trim(),password=$('regPass').value;if(!name||!username||!password){$('authMessage').textContent='يرجى تعبئة جميع الحقول';return}if(username==='admin'||users.some(u=>u.username===username)){$('authMessage').textContent='اسم المستخدم مستخدم مسبقًا';return}if(password.length<4){$('authMessage').textContent='كلمة المرور يجب ألا تقل عن 4 أحرف';return}users.push({name,username,password,role:'user'});persist();$('loginUser').value=username;$('loginPass').value=password;authMode('login');$('authMessage').textContent='تم إنشاء الحساب. يمكنك تسجيل الدخول.';}
-function startApp(){if(!me()){current=null;localStorage.removeItem('bv_current');refreshVisitorUI();return}updateWelcome();updatePublicStats();const admin=isAdmin();$('userChip').innerHTML=escapeHTML(me().name)+(admin?' · مشرف':'')+' <button class="btn secondary small" onclick="logout()">خروج</button>';$('adminNav').classList.toggle('hidden',!admin);$('adminNavTitle').classList.toggle('hidden',!admin);$('stats').classList.toggle('hidden',!admin);$('latestReportsHead').classList.toggle('hidden',!admin);$('latest').classList.toggle('hidden',!admin);updateAll();refreshPublicSections();}
-function refreshVisitorUI(){ updateWelcome();updatePublicStats(); $('userChip').innerHTML='<button class="btn small" onclick="showAuth()">تسجيل الدخول</button>'; $('adminNav').classList.add('hidden'); $('adminNavTitle').classList.add('hidden'); $('stats').classList.add('hidden'); $('latestReportsHead').classList.add('hidden'); $('latest').classList.add('hidden'); refreshPublicSections(); }
+function startApp(){if(!me()){current=null;localStorage.removeItem('bv_current');refreshVisitorUI();return}updateWelcome();updatePublicStats();const admin=isAdmin();$('userChip').innerHTML=escapeHTML(me().name)+(admin?' · مشرف':'')+' <button class="btn secondary small" onclick="logout()">خروج</button>';$('logoutNav').classList.remove('hidden');$('adminNav').classList.toggle('hidden',!admin);$('adminNavTitle').classList.toggle('hidden',!admin);$('stats').classList.toggle('hidden',!admin);$('latestReportsHead').classList.toggle('hidden',!admin);$('latest').classList.toggle('hidden',!admin);updateAll();refreshPublicSections();}
+function refreshVisitorUI(){ updateWelcome();updatePublicStats(); $('userChip').innerHTML='<button class="btn small" onclick="showAuth()">تسجيل الدخول</button>'; $('logoutNav').classList.add('hidden'); $('adminNav').classList.add('hidden'); $('adminNavTitle').classList.add('hidden'); $('stats').classList.add('hidden'); $('latestReportsHead').classList.add('hidden'); $('latest').classList.add('hidden'); refreshPublicSections(); }
 function refreshPublicSections(){renderEncyclopedia();renderCourses();renderHub();renderArchive();}
 function logout(){current=null;localStorage.removeItem('bv_current');refreshVisitorUI();go('home');showToast('تم تسجيل الخروج، يمكنك مواصلة التصفح كزائر');}
 const titles={home:'الرئيسية',archive:'أرشيف الأخطاء',report:'إضافة بلاغ',mine:'بلاغاتي',encyclopedia:'الموسوعة البرمجية',encyDetail:'تفاصيل الموضوع',courses:'الدورات التدريبية',myCourses:'دوراتي',courseDetail:'تفاصيل الدورة',certificates:'شهاداتي',certificateView:'عرض الشهادة',details:'تفاصيل البلاغ',account:'حسابي',admin:'لوحة المشرف',developerHub:'Developer Hub — مجتمع المطورين'};
@@ -256,4 +345,4 @@ function updateHubStatus(id,status){if(!isAdmin())return;const p=hubPosts.find(x
 if(current&&me())startApp();else{current=null;refreshVisitorUI();}
 </script>
 </body>
-</html>
+ </html>
