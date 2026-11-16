@@ -14,7 +14,7 @@
 .main{margin-right:240px;padding:25px 30px;max-width:1550px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:10px}.topbar h2{margin:0;font-size:21px}.user-chip{background:var(--panel);border:1px solid var(--border);padding:8px 12px;border-radius:11px;color:var(--muted);font-size:12px}
 .page{display:none}.page.active{display:block}.hero{padding:27px;border:1px solid #44315e;border-radius:18px;background:linear-gradient(120deg,#2a1b43,#151020);margin-bottom:20px}.hero h1{font-size:26px;margin:0 0 7px}.hero p{color:#c3b5d5;margin:0 0 17px;font-size:14px}
 .btn{border:0;border-radius:10px;padding:10px 16px;background:var(--purple);color:white;font-weight:700}.btn:hover{filter:brightness(1.12)}.btn.secondary{background:#292135;border:1px solid var(--border);color:#eee5fb}.btn.danger{background:#572331;color:#ffc0c9}.btn.success{background:#174d3e;color:#a5f2d7}.btn.small{padding:6px 10px;font-size:12px}
-.stats,.stats-grid,.statistics,.dashboard-stats{display:none!important}.stat,.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px}.stat strong{display:block;font-size:26px;margin:5px 0}.stat small{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stat,.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px}.stat strong{display:block;font-size:26px;margin:5px 0}.stat small{color:var(--muted)}
 .section-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px;gap:10px}.section-head h3{margin:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
 .report-card,.item-card{background:var(--panel);border:1px solid var(--border);padding:16px;border-radius:14px}.report-card h3,.item-card h3{font-size:16px;margin:9px 0}.report-card p,.item-card p{font-size:13px;color:var(--muted);line-height:1.9}.report-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .number{color:#bd9cff;font-size:12px;font-weight:800;direction:ltr}.tag,.pill{font-size:11px;border-radius:20px;padding:5px 9px;background:#302340;color:#d8c5ff}.status{font-size:11px;padding:5px 9px;border-radius:20px;background:#44351b;color:var(--yellow)}.status.done{background:#153b31;color:var(--green)}.status.rejected{background:#48202b;color:#ff91a3}
@@ -25,6 +25,8 @@ input,textarea,select{width:100%;background:#100d18;border:1px solid var(--borde
 .codebox{direction:ltr;text-align:left;white-space:pre-wrap;background:#0b0912;border:1px solid var(--border);padding:14px;border-radius:10px;color:#c8aaff;font-family:monospace;font-size:13px;line-height:1.8;overflow:auto}.detail-box{background:#100d18;padding:14px;border:1px solid var(--border);border-radius:11px;line-height:1.9;font-size:13px}
 .certificate{background:#fff;color:#29203b;padding:34px;border:9px double #a17be5;border-radius:8px;text-align:center;max-width:850px;margin:15px auto}.certificate .cert-logo{font-size:22px;font-weight:800;color:#7045bb}.certificate h1{font-size:32px;color:#7045bb;margin:20px 0}.certificate .cert-name{font-size:27px;font-weight:800;margin:16px 0;color:#32234c}.certificate p{color:#514663;line-height:2}.cert-number{font-size:12px;color:#7256a1;direction:ltr}.cert-footer{display:flex;justify-content:space-between;margin-top:35px;gap:20px}.cert-footer div{border-top:1px solid #b6a4d3;padding:8px 15px;font-size:12px}
 .hub-intro{background:linear-gradient(120deg,#241637,#171020);border:1px solid #44315e;border-radius:16px;padding:20px;margin-bottom:16px}.hub-intro h1{margin:0 0 6px}.hub-intro p{color:var(--muted);margin:0}.hub-action{min-height:130px}.hub-action .symbol{font-size:25px}.hub-form{max-width:760px}.post-code{direction:ltr;text-align:left;white-space:pre-wrap;background:#0b0912;border:1px solid var(--border);padding:12px;border-radius:10px;color:#c8aaff;overflow:auto}
+
+/* BugVault interactive polish */
 :root{scroll-behavior:smooth}
 .hero{position:relative;overflow:hidden;animation:heroIn .65s ease both}
 .hero:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;left:-70px;top:-110px;background:radial-gradient(circle,rgba(173,126,255,.22),transparent 70%);pointer-events:none}
@@ -48,9 +50,13 @@ input,textarea,select{width:100%;background:#100d18;border:1px solid var(--borde
 @keyframes pageIn{from{opacity:.55;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 @keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
-@media(max-width:600px){.hero{padding:21px}.hero h1{font-size:22px}.quick-search{flex-direction:column;align-items:stretch}.toast-wrap{left:12px;bottom:12px}}
+@media(max-width:600px){.admin-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.admin-stat-card{padding:12px}.admin-stat-card strong{font-size:21px}.hero{padding:21px}.hero h1{font-size:22px}.quick-search{flex-direction:column;align-items:stretch}.toast-wrap{left:12px;bottom:12px}}
+
 @media(max-width:850px){.sidebar{position:relative;width:100%;height:auto;bottom:auto;padding:12px}.tagline,.nav-title{display:none}.nav{display:flex;overflow-x:auto;gap:4px}.nav button{white-space:nowrap;width:auto;padding:9px;font-size:12px}.main{margin:0;padding:16px}.grid{grid-template-columns:1fr}.topbar h2{font-size:18px}}
 @media print{body{background:white!important}body *{visibility:hidden!important}#printArea,#printArea *{visibility:visible!important}#printArea{position:absolute;top:0;left:0;width:100%;margin:0;padding:20px}.certificate{margin:0 auto;max-width:none;min-height:500px}.no-print{display:none!important}}
+
+
+/* BugVault responsive layout: phones, tablets, laptops and wide screens */
 html, body { width:100%; max-width:100%; overflow-x:hidden; }
 body { min-width:0; }
 #app, .main, .sidebar, .page, .hero, .card, .item-card, .report-card { min-width:0; }
@@ -61,18 +67,29 @@ button, input, textarea, select { max-width:100%; }
 .quick-search input { min-width:0; }
 .table-wrap { max-width:100%; }
 .codebox, .post-code { max-width:100%; overflow-x:auto; overflow-wrap:anywhere; }
+
 @media (min-width:851px) and (max-width:1100px) {
   .sidebar { width:215px; padding:18px 12px; }
   .main { margin-right:215px; padding:22px; }
   .nav button { font-size:12px; padding:9px 10px; }
 }
+
 @media (max-width:850px) {
-  .sidebar {position:relative;inset:auto;width:100%;height:auto;padding:14px clamp(12px,3vw,22px);border-left:0;border-bottom:1px solid var(--border);overflow:visible}
+  .sidebar {
+    position:relative; inset:auto; width:100%; height:auto;
+    padding:14px clamp(12px,3vw,22px);
+    border-left:0; border-bottom:1px solid var(--border);
+    overflow:visible;
+  }
   .logo { margin:0 4px; font-size:23px; }
   .tagline { display:block; margin:0 4px 12px; }
   .nav-title { display:none; }
   .sidebar > .nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; overflow:visible; }
-  .sidebar > .nav button {width:100%;min-width:0;white-space:normal;text-align:center;margin:0;padding:10px 7px;line-height:1.5;font-size:12px;border:1px solid rgba(255,255,255,.045)}
+  .sidebar > .nav button {
+    width:100%; min-width:0; white-space:normal; text-align:center;
+    margin:0; padding:10px 7px; line-height:1.5; font-size:12px;
+    border:1px solid rgba(255,255,255,.045);
+  }
   .sidebar > .nav button.active { border-right:1px solid var(--purple); }
   .main { width:100%; max-width:none; margin:0; padding:clamp(12px,3vw,22px); }
   .topbar { flex-wrap:wrap; align-items:center; }
@@ -81,6 +98,7 @@ button, input, textarea, select { max-width:100%; }
   .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
+
 @media (max-width:600px) {
   .sidebar { padding:12px; }
   .logo { font-size:21px; }
@@ -110,27 +128,35 @@ button, input, textarea, select { max-width:100%; }
   .certificate .cert-name { font-size:21px; }
   .cert-footer { flex-wrap:wrap; }
 }
+
 @media (max-width:360px) {
   .sidebar > .nav { grid-template-columns:minmax(0,1fr); }
+
   .hero { padding:15px; }
   .hero h1 { font-size:19px; }
   .main { padding:10px; }
   .auth-box { padding:15px; }
 }
+
 @media (min-width:1200px) {
   .main { margin-left:auto; margin-right:240px; }
   .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
+
+
 .hub-tabs{flex-wrap:wrap}.hub-tabs .btn{min-width:145px}.hub-replies{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}.reply-item{background:#100d18;border:1px solid var(--border);border-radius:10px;padding:10px;margin:8px 0;font-size:13px}.reply-item.best{border-color:var(--green)}.reply-form textarea{min-height:75px}.profile-badges{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.badge-item{background:#302340;border:1px solid #604583;padding:6px 10px;border-radius:20px;font-size:12px;color:#e4d4ff}.notification-item{background:var(--panel);border:1px solid var(--border);padding:13px;border-radius:12px;margin:9px 0}.notification-item.unread{border-right:3px solid var(--purple)}
+.admin-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0 24px}.admin-stat-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:15px;min-width:0}.admin-stat-card strong{display:block;font-size:25px;color:#d4baff;margin-top:5px}.admin-stat-card span{font-size:12px;color:var(--muted)}
+@media(max-width:700px){.admin-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 </head>
 <body>
 <div id="auth" class="auth hidden"><div class="auth-box">
-<div class="logo">Bug<span>Vault</span></div><p>منصتك للأكواد والأخطاء البرمجية</p><p>سجّل الدخول أو أنشئ حسابًا للمتابعة بهذه الميزة.</p><p class="muted" style="font-size:11px">تنبيه: هذه نسخة تجريبية؛ الحسابات والبيانات محفوظة محليًا على هذا المتصفح فقط، وليست مشتركة بين الأجهزة حتى ربط قاعدة البيانات.</p>
+<div class="logo">Bug<span>Vault</span></div><p>منصتك للأكواد والأخطاء البرمجية</p><p>سجّل الدخول أو أنشئ حسابًا للمتابعة بهذه الميزة.</p>
 <div class="auth-tabs"><button class="btn" id="loginTab" onclick="authMode('login')">تسجيل الدخول</button><button class="btn secondary" id="registerTab" onclick="authMode('register')">حساب جديد</button></div>
 <div id="loginForm"><div class="field"><label>اسم المستخدم</label><input id="loginUser" placeholder="اسم المستخدم"></div><div class="field"><label>كلمة المرور</label><input id="loginPass" type="password" placeholder="كلمة المرور"></div><button class="btn" style="width:100%" onclick="login()">دخول</button></div>
 <div id="registerForm" class="hidden"><div class="field"><label>الاسم</label><input id="regName" placeholder="اسمك"></div><div class="field"><label>اسم المستخدم</label><input id="regUser" placeholder="اسم المستخدم"></div><div class="field"><label>كلمة المرور</label><input id="regPass" type="password" placeholder="كلمة المرور"></div><button class="btn" style="width:100%" onclick="register()">إنشاء حساب</button></div>
-<p id="authMessage"></p><button class="btn secondary" style="width:100%;margin-top:8px" onclick="closeAuth()">متابعة التصفح كزائر</button><hr><p class="muted" style="font-size:11px">حساب المشرف التجريبي المحلي: admin — كلمة المرور: BugVault123</p><p class="muted" style="font-size:11px">لا تستخدمي بيانات حقيقية أو كلمات مرور مهمة في هذه النسخة التجريبية.</p>
+<p id="authMessage"></p><button class="btn secondary" style="width:100%;margin-top:8px" onclick="closeAuth()">متابعة التصفح كزائر</button><hr><p>حساب المشرف التجريبي: admin</p><p>كلمة المرور: BugVault123</p>
 </div></div>
 <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
 <div id="app">
@@ -150,6 +176,7 @@ button, input, textarea, select { max-width:100%; }
 <button class="btn" onclick="go('encyclopedia')">استكشف الموسوعة</button> <button class="btn secondary" onclick="go('courses')">اكتشف الدورات</button>
 <div class="hero-meta"><button class="btn secondary small" onclick="go('encyclopedia')">💡 تعلّم واكتشف</button><button class="btn secondary small" onclick="go('developerHub')">🤝 شارك خبرتك</button><button class="btn secondary small" onclick="go('courses')">🚀 طوّر مهاراتك</button></div>
 </div>
+
 <div class="quick-search"><input id="homeSearch" placeholder="🔎 ابحث عن خطأ أو لغة برمجة أو دورة..." onkeydown="if(event.key==='Enter')quickSearch()"><button class="btn" onclick="quickSearch()">ابحث</button></div>
 <div class="section-head hidden" id="latestReportsHead"><h3>أحدث البلاغات</h3><button class="btn secondary small" onclick="go('archive')">عرض الكل</button></div><div class="grid" id="latest"></div>
 <div class="section-head"><h3>اكتشف أقسام BugVault</h3><span class="muted">اختر وجهتك وابدأ</span></div><div class="grid"><div class="item-card"><h3>📚 الموسوعة البرمجية</h3><p>تعلم لغات البرمجة والأكواد والأخطاء الشائعة.</p><button class="btn small" onclick="go('encyclopedia')">استكشف</button></div><div class="item-card"><h3>🎓 الدورات التدريبية</h3><p>سجل في الدورات وطوّر مهاراتك البرمجية.</p><button class="btn small" onclick="go('courses')">عرض الدورات</button></div><div class="item-card"><h3>🤝 مجتمع المطورين</h3><p>شارك خبرتك، اطلب المساعدة، واقترح أفكارًا لتطوير المنصة.</p><button class="btn small" onclick="go('developerHub')">دخول المجتمع</button></div><div class="item-card"><h3>🗂️ أرشيف الأخطاء</h3><p>تصفّح البلاغات والحالات والحلول المنشورة.</p><button class="btn small" onclick="go('archive')">تصفح الأرشيف</button></div></div></section>
@@ -165,6 +192,7 @@ button, input, textarea, select { max-width:100%; }
 <section id="details" class="page"><div class="card form-card" id="detailContent"></div></section>
 <section id="developerHub" class="page">
 <div class="hub-intro"><h1>🤝 Developer Hub</h1><p>مجتمع المطورين — شارك خبرتك، اطلب المساعدة، وانشر أفكارك البرمجية.</p></div>
+
 <div class="actions hub-tabs" style="margin:16px 0"><button class="btn" id="helpNeedTab" onclick="setHubTab('طلب مساعدة')">🆘 احتياج مساعدة</button><button class="btn secondary" id="helpOfferTab" onclick="setHubTab('مساعدة مقدمة')">🙌 تقديم مساعدة</button><button class="btn secondary" onclick="openHubForm(hubTab)">＋ إنشاء مشاركة</button></div>
 <div class="card" style="margin-bottom:16px"><h3 id="hubTabHeading">احتياج مساعدة</h3><p class="muted" id="hubTabDescription">اطرح مشكلتك البرمجية، واستقبل ردود المطورين واختر أفضل إجابة عند حلها.</p></div>
 <div id="hubFormWrap" class="card hub-form hidden" style="margin-top:18px"><div class="section-head"><h3 id="hubFormTitle">مشاركة جديدة</h3><button class="btn secondary small" onclick="closeHubForm()">إغلاق</button></div>
@@ -183,6 +211,7 @@ button, input, textarea, select { max-width:100%; }
 <section id="notifications" class="page"><div class="section-head"><h3>🔔 مركز الإشعارات</h3><button class="btn secondary small" onclick="markNotificationsRead()">تحديد الكل كمقروء</button></div><div id="notificationList"></div></section>
 <section id="solutions" class="page"><div class="hero"><h1>🧩 مكتبة الحلول البرمجية</h1><p>إجابات المجتمع المختارة وأفضل الحلول للمشكلات المتكررة.</p></div><div class="field"><input id="solutionSearch" placeholder="ابحث عن حل أو تخصص..." oninput="renderSolutions()"></div><div id="solutionList" class="grid"></div></section>
 <section id="admin" class="page"><div class="hero"><h1>لوحة إدارة BugVault</h1><p>إدارة البلاغات والدورات والمشاركين والشهادات ومساهمات المجتمع.</p></div>
+<div class="section-head"><h3>ملخص المنصة — للمشرف فقط</h3><span class="muted">إحصائيات البيانات المحفوظة على هذا المتصفح</span></div><div id="adminStats" class="admin-stat-grid"></div>
 <div class="section-head"><h3>إدارة البلاغات</h3></div><div class="table-wrap"><table><thead><tr><th>رقم البلاغ</th><th>العنوان</th><th>صاحب البلاغ</th><th>الحالة</th><th>الإجراء</th></tr></thead><tbody id="adminTable"></tbody></table></div>
 <div class="section-head"><h3>إضافة دورة جديدة</h3></div><div class="card form-card"><div class="field"><label>اسم الدورة</label><input id="courseTitle"></div><div class="field"><label>وصف الدورة</label><textarea id="courseDesc"></textarea></div><div class="field"><label>تاريخ الدورة</label><input id="courseDate" type="date"></div><div class="field"><label>مدة الدورة</label><input id="courseDuration" placeholder="مثال: 3 أيام"></div><div class="field"><label>عدد المقاعد</label><input id="courseSeats" type="number" min="1" value="20"></div><div class="field"><label>مستوى الدورة</label><select id="courseLevel"><option>مبتدئ</option><option>متوسط</option><option>متقدم</option></select></div><button class="btn" onclick="addCourse()">إضافة الدورة</button><p id="courseMessage" class="muted"></p></div>
 <div class="section-head"><h3>إدارة الدورات والحضور والشهادات</h3></div><div class="table-wrap"><table><thead><tr><th>الدورة</th><th>التاريخ</th><th>المسجلون</th><th>الإجراء</th></tr></thead><tbody id="adminCourses"></tbody></table></div><div class="section-head"><h3>المشاركون والحضور وإتمام الدورة</h3></div><div id="attendanceArea"></div>
@@ -194,10 +223,10 @@ const $=id=>document.getElementById(id);
 const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch(e){return fallback}};
 const save=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
 let users=read('bv_users',[]),reports=read('bv_reports',[]),current=read('bv_current',null),courses=read('bv_courses',[]),hubPosts=read('bv_community',[]),notifications=read('bv_notifications',[]);
+users.forEach(u=>{if(u.role==='user')u.role='developer';});
 let hubTab='طلب مساعدة';
 let nextNumber=Number(localStorage.getItem('bv_next')||1001),nextHubId=Number(localStorage.getItem('bv_hub_next')||1);
-if(!users.some(u=>u.username==='admin'))users.push({name:'مشرف BugVault',username:'admin',password:'BugVault123',role:'admin'});
-users.forEach(u=>{if(u.role==='user'||!u.role)u.role='developer';});
+if(!users.some(u=>u.username==='admin'))users.push({name:'مشرف النظام',username:'admin',password:'BugVault123',role:'admin'});
 if(reports.length===0){const samples=[
 ['مشكلة تسجيل الدخول','أخطاء برمجية','لا يستطيع المستخدم تسجيل الدخول رغم إدخال البيانات الصحيحة.','التحقق من بيانات الدخول ومعالجة الجلسة.'],
 ['تأخر تحميل الصفحة الرئيسية','أداء النظام','تستغرق الصفحة الرئيسية وقتًا طويلًا حتى تظهر.','تحسين تحميل الموارد.'],
@@ -219,7 +248,7 @@ if(reports.length===0){const samples=[
 ['عدم تحديث الإحصائيات','أخطاء برمجية','لا تتغير أرقام لوحة التحكم بعد إضافة بلاغ.','تحديث الإحصائيات بعد كل عملية.'],
 ['انتهاء الجلسة بسرعة','أمان','تنتهي جلسة المستخدم قبل انتهاء العمل.','مراجعة مدة الجلسة.'],
 ['مشكلة في ترتيب البلاغات','أخطاء برمجية','لا تظهر البلاغات حسب الأحدث.','ترتيب السجلات حسب التاريخ.']];
-samples.forEach((s,i)=>reports.push({id:1001+i,number:'BV-'+(1001+i),title:s[0],category:s[1],description:s[2],solution:s[3],status:['تم الحل','قيد المراجعة','تم الحل','قيد المراجعة'][i%4],author:'admin',authorName:'مدير النظام',date:new Date(Date.now()-i*86400000).toLocaleDateString('ar-SA')}));nextNumber=Math.max(nextNumber,1021);}
+samples.forEach((s,i)=>reports.push({id:1001+i,number:'BV-'+(1001+i),title:s[0],category:s[1],description:s[2],solution:s[3],status:['تم الحل','قيد المراجعة','تم الحل','قيد المراجعة'][i%4],author:'admin',authorName:'مشرف النظام',date:new Date(Date.now()-i*86400000).toLocaleDateString('ar-SA')}));nextNumber=Math.max(nextNumber,1021);}
 if(courses.length===0)courses=[
 {id:1,title:'أساسيات لغة Python',description:'تعلم أساسيات البرمجة باستخدام Python والمتغيرات والشروط والحلقات.',date:'2026-12-01',duration:'3 أيام',seats:20,level:'مبتدئ',status:'متاحة',enrollments:[]},
 {id:2,title:'اكتشاف الأخطاء البرمجية وإصلاحها',description:'تعرف على أنواع الأخطاء البرمجية وطرق تحليلها وتصحيحها.',date:'2026-12-08',duration:'يومان',seats:15,level:'متوسط',status:'متاحة',enrollments:[]},
@@ -230,13 +259,14 @@ function persist(){save('bv_users',users);save('bv_reports',reports);save('bv_co
 persist();
 function escapeHTML(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function me(){return users.find(u=>u.username===current?.username)}function isAdmin(){return me()?.role==='admin'}
+
 function showToast(message,type='success'){
  const wrap=$('toastWrap');if(!wrap)return;
  const item=document.createElement('div');item.className='toast '+type;item.textContent=message;wrap.appendChild(item);
  setTimeout(()=>{item.style.opacity='0';item.style.transform='translateY(8px)';setTimeout(()=>item.remove(),220)},3200);
 }
 function updateWelcome(){
- $('welcomeTime').textContent='مرحبًا بك في BugVault';
+ $('welcomeTime').textContent='مساحة الإبداع البرمجي';
  const user=me();
  $('heroGreeting').textContent=user?'أهلًا '+user.name+' 💜':'أهلًا بك في BugVault 💜';
  $('heroSub').textContent=user?'يسعدنا وجودك معنا. استكشف المعرفة، تابع دوراتك، وشارك مجتمع المطورين.':'تصفّح بحرية، اكتشف المعرفة البرمجية، وعندما تحتاج للمشاركة أو إرسال طلب يمكنك تسجيل الدخول.';
@@ -244,7 +274,7 @@ function updateWelcome(){
 function updatePublicStats(){}
 function quickSearch(){
  const q=$('homeSearch').value.trim();if(!q){showToast('اكتب كلمة للبحث أولًا','error');return}
- $('search').value=q;$('encySearch').value=q;$('courseSearch').value=q;
+ if($('search'))$('search').value=q;if($('encySearch'))$('encySearch').value=q;if($('courseSearch'))$('courseSearch').value=q;
  const inReports=reports.some(r=>[r.number,r.title,r.category,r.description].join(' ').toLowerCase().includes(q.toLowerCase()));
  const inEncy=encyclopedia.some(e=>[e.title,e.category,e.description].join(' ').toLowerCase().includes(q.toLowerCase()));
  const inCourses=courses.some(c=>[c.title,c.description,c.level].join(' ').toLowerCase().includes(q.toLowerCase()));
@@ -253,13 +283,14 @@ function quickSearch(){
  else if(inReports){go('archive');renderArchive();showToast('هذه نتائج البحث في أرشيف الأخطاء');}
  else{go('encyclopedia');renderEncyclopedia();showToast('لم نجد تطابقًا مباشرًا؛ جرّب كلمة أخرى','error');}
 }
+
 function authMode(mode){$('loginForm').classList.toggle('hidden',mode!=='login');$('registerForm').classList.toggle('hidden',mode!=='register');$('loginTab').className=mode==='login'?'btn':'btn secondary';$('registerTab').className=mode==='register'?'btn':'btn secondary';$('authMessage').textContent='';}
 function showAuth(){ $('auth').classList.remove('hidden'); authMode('login'); }
 function closeAuth(){ $('auth').classList.add('hidden'); }
 function login(){const u=$('loginUser').value.trim(),p=$('loginPass').value,user=users.find(x=>x.username===u&&x.password===p);if(!user){$('authMessage').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';return}current={username:user.username};save('bv_current',current);closeAuth();startApp();showToast('أهلًا بعودتك إلى BugVault 💜');}
 function register(){const name=$('regName').value.trim(),username=$('regUser').value.trim(),password=$('regPass').value;if(!name||!username||!password){$('authMessage').textContent='يرجى تعبئة جميع الحقول';return}if(username==='admin'||users.some(u=>u.username===username)){$('authMessage').textContent='اسم المستخدم مستخدم مسبقًا';return}if(password.length<4){$('authMessage').textContent='كلمة المرور يجب ألا تقل عن 4 أحرف';return}users.push({name,username,password,role:'developer'});persist();$('loginUser').value=username;$('loginPass').value=password;authMode('login');$('authMessage').textContent='تم إنشاء الحساب. يمكنك تسجيل الدخول.';}
 function startApp(){if(!me()){current=null;localStorage.removeItem('bv_current');refreshVisitorUI();return}updateWelcome();const admin=isAdmin();$('userChip').innerHTML=escapeHTML(me().name)+(admin?' · مشرف':' · مطور')+' <button class="btn secondary small" onclick="logout()">خروج</button>';$('logoutNav').classList.remove('hidden');$('adminNav').classList.toggle('hidden',!admin);$('adminNavTitle').classList.toggle('hidden',!admin);$('latestReportsHead').classList.toggle('hidden',!admin);$('latest').classList.toggle('hidden',!admin);updateAll();refreshPublicSections();updateNotificationDot();}
-function refreshVisitorUI(){ updateWelcome(); $('userChip').innerHTML='زائر · تصفح عام <button class="btn small" onclick="showAuth()">تسجيل الدخول</button>'; $('logoutNav').classList.add('hidden'); $('adminNav').classList.add('hidden'); $('adminNavTitle').classList.add('hidden');  $('latestReportsHead').classList.add('hidden'); $('latest').classList.add('hidden'); refreshPublicSections();updateNotificationDot(); }
+function refreshVisitorUI(){ updateWelcome(); $('userChip').innerHTML='<button class="btn small" onclick="showAuth()">تسجيل الدخول</button>'; $('logoutNav').classList.add('hidden'); $('adminNav').classList.add('hidden'); $('adminNavTitle').classList.add('hidden');  $('latestReportsHead').classList.add('hidden'); $('latest').classList.add('hidden'); refreshPublicSections();updateNotificationDot(); }
 function refreshPublicSections(){renderEncyclopedia();renderCourses();renderHub();renderArchive();renderSolutions();}
 function logout(){current=null;localStorage.removeItem('bv_current');refreshVisitorUI();go('home');showToast('تم تسجيل الخروج، يمكنك مواصلة التصفح كزائر');}
 const titles={notifications:'الإشعارات',solutions:'مكتبة الحلول',home:'الرئيسية',archive:'أرشيف الأخطاء',report:'إضافة بلاغ',mine:'بلاغاتي',encyclopedia:'الموسوعة البرمجية',encyDetail:'تفاصيل الموضوع',courses:'الدورات التدريبية',myCourses:'دوراتي',courseDetail:'تفاصيل الدورة',certificates:'شهاداتي',certificateView:'عرض الشهادة',details:'تفاصيل البلاغ',account:'حسابي',admin:'لوحة المشرف',developerHub:'Developer Hub — مجتمع المطورين'};
@@ -276,6 +307,7 @@ function deleteReport(id){if(!isAdmin()||!confirm('هل تريد حذف البل
 function renderAccount(){const u=me();$('accountUser').textContent=u.username;$('accountRole').textContent=u.role==='admin'?'مشرف':'مطور';$('profileName').value=u.name||'';$('profileSpecialty').value=u.specialty||'';$('profileSkills').value=u.skills||'';$('profileBio').value=u.bio||'';renderProfileBadges();}
 function saveProfile(){const u=me();if(!u)return;const name=$('profileName').value.trim();if(!name){$('profileMessage').textContent='اكتب الاسم الظاهر أولًا.';return}u.name=name;u.specialty=$('profileSpecialty').value.trim();u.skills=$('profileSkills').value.trim();u.bio=$('profileBio').value.trim();persist();$('profileMessage').textContent='تم حفظ ملفك الشخصي.';startApp();renderAccount();showToast('تم تحديث ملفك الشخصي 💜')}
 function renderProfileBadges(){const u=me();if(!u)return;const authored=hubPosts.filter(p=>p.author===u.username).length,answers=hubPosts.reduce((n,p)=>n+(p.replies||[]).filter(r=>r.author===u.username).length,0),solved=hubPosts.filter(p=>p.author===u.username&&p.status==='تم حل المشكلة').length;const b=[];if(authored>=1)b.push('🌱 مساهم جديد');if(answers>=1)b.push('🤝 مساعد المجتمع');if(solved>=1)b.push('🏆 صاحب مشكلة محلولة');if(courses.some(c=>c.enrollments.some(e=>e.username===u.username&&e.completed)))b.push('🎓 متعلم معتمد');$('profileBadges').innerHTML='<h3>إنجازاتي وشاراتي</h3><div class="profile-badges">'+(b.length?b.map(x=>`<span class="badge-item">${x}</span>`).join(''):'<span class="muted">ستظهر شاراتك هنا مع مشاركاتك وإنجازاتك.</span>')+'</div>';}
+
 const encyclopedia=[
 {id:1,title:'أساسيات Python',lang:'Python',desc:'لغة برمجة سهلة القراءة تستخدم في تطوير التطبيقات وتحليل البيانات.',ex:'print("Hello World")',explain:'الأمر print يعرض النص المكتوب بين علامتي التنصيص.',problem:'SyntaxError',solution:'راجع الأقواس وعلامات التنصيص وطريقة كتابة الأمر.'},
 {id:2,title:'المتغيرات في Python',lang:'Python',desc:'المتغير يخزن قيمة يمكن استخدامها أثناء تشغيل البرنامج.',ex:'name = "Sara"\\nage = 20\\nprint(name)',explain:'يتم تخزين الاسم والعمر داخل متغيرات ثم طباعة الاسم.',problem:'NameError',solution:'تأكد من كتابة اسم المتغير بشكل صحيح.'},
@@ -302,7 +334,15 @@ function cancelEnrollment(id){if(!me()){showAuth();return}const c=courses.find(x
 function renderMyCourses(){if(!me())return;const list=courses.filter(c=>enrolled(c));$('myCourseList').innerHTML=list.length?list.map(c=>{const e=c.enrollments.find(x=>x.username===me().username);return `<article class="item-card"><h3>${escapeHTML(c.title)}</h3><p>📅 ${escapeHTML(c.date||'يحدد لاحقًا')}</p><p>الحضور: ${e.attended?'<span class="status done">تم تسجيل الحضور</span>':'<span class="status">لم يسجل الحضور</span>'}</p><p>إتمام الدورة: ${e.completed?'<span class="status done">مكتملة</span>':'<span class="status">لم تكتمل بعد</span>'}</p><button class="btn small" onclick="courseDetails(${c.id})">تفاصيل الدورة</button></article>`}).join(''):'<div class="empty">لم تسجل في أي دورة حتى الآن.</div>';}
 function renderCertificates(){if(!me())return;const list=[];courses.forEach(c=>c.enrollments.forEach(e=>{if(e.username===me().username&&e.completed&&e.certificateNo)list.push({course:c,enrollment:e})}));$('certificateList').innerHTML=list.length?list.map(x=>`<article class="item-card"><h3>🏆 ${escapeHTML(x.course.title)}</h3><p>رقم الشهادة: <span class="number">${escapeHTML(x.enrollment.certificateNo)}</span></p><p>تاريخ الإصدار: ${escapeHTML(x.enrollment.issueDate)}</p><span class="status done">شهادة معتمدة من المشرف</span><div style="margin-top:12px"><button class="btn" onclick="viewCertificate(${x.course.id})">عرض الشهادة</button></div></article>`).join(''):'<div class="empty">لا توجد شهادات حتى الآن. أكمل دورة واحضرها وانتظر اعتماد المشرف.</div>';}
 function viewCertificate(courseId){const c=courses.find(x=>x.id===courseId);if(!c)return;const e=c.enrollments.find(x=>x.username===me().username&&x.completed&&x.certificateNo);if(!e){alert('لا توجد شهادة لهذه الدورة.');return}$('printArea').innerHTML=`<div class="certificate"><div class="cert-logo">BugVault</div><div style="font-size:48px;margin:12px">🏆</div><h1>شهادة إتمام دورة تدريبية</h1><p>تشهد منصة BugVault بأن المتدرب / المتدربة</p><div class="cert-name">${escapeHTML(e.name)}</div><p>قد أتم بنجاح الدورة التدريبية</p><h2 style="color:#7045bb">${escapeHTML(c.title)}</h2><p>بمستوى ${escapeHTML(c.level)}، ومدة ${escapeHTML(c.duration)}.</p><p>وذلك تقديرًا لجهوده ومشاركته في التعلم والتطوير البرمجي.</p><div class="cert-footer"><div>تاريخ الإصدار<br><strong>${escapeHTML(e.issueDate)}</strong></div><div>اعتماد المنصة<br><strong>BugVault</strong></div></div><p class="cert-number">Certificate No: ${escapeHTML(e.certificateNo)}</p></div>`;go('certificateView');}
-function renderAdmin(){if(!isAdmin())return;$('adminTable').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).map(r=>`<tr><td class="number">${escapeHTML(r.number)}</td><td>${escapeHTML(r.title)}</td><td>${escapeHTML(r.authorName)}</td><td>${statusBadge(r.status)}</td><td><button class="btn small" onclick="details(${r.id})">تفاصيل</button><button class="btn danger small" onclick="deleteReport(${r.id})">حذف</button></td></tr>`).join('');$('adminCourses').innerHTML=courses.map(c=>`<tr><td>${escapeHTML(c.title)}</td><td>${escapeHTML(c.date||'—')}</td><td>${c.enrollments.length} / ${c.seats}</td><td><button class="btn small" onclick="adminCourse(${c.id})">المشاركون</button><button class="btn danger small" onclick="deleteCourse(${c.id})">حذف</button></td></tr>`).join('');renderAdminHub();}
+function renderAdminStats(){
+ if(!isAdmin())return;
+ const resolved=reports.filter(r=>r.status==='تم الحل').length;
+ const developers=users.filter(u=>u.role!=='admin').length;
+ const communityReplies=hubPosts.reduce((n,p)=>n+(Array.isArray(p.replies)?p.replies.length:0),0);
+ const cards=[['🗂️','إجمالي البلاغات',reports.length],['✅','البلاغات المحلولة',resolved],['🤝','مشاركات المجتمع',hubPosts.length],['👩‍💻','حسابات المطورين',developers],['💬','ردود المجتمع',communityReplies],['🎓','الدورات التدريبية',courses.length],['🏅','الشهادات الصادرة',courses.reduce((n,c)=>n+c.enrollments.filter(e=>e.completed).length,0)],['🔔','الإشعارات',notifications.length]];
+ $('adminStats').innerHTML=cards.map(c=>`<div class="admin-stat-card"><span>${c[0]} ${c[1]}</span><strong>${c[2]}</strong></div>`).join('');
+}
+function renderAdmin(){if(!isAdmin())return;renderAdminStats();$('adminTable').innerHTML=reports.slice().sort((a,b)=>b.id-a.id).map(r=>`<tr><td class="number">${escapeHTML(r.number)}</td><td>${escapeHTML(r.title)}</td><td>${escapeHTML(r.authorName)}</td><td>${statusBadge(r.status)}</td><td><button class="btn small" onclick="details(${r.id})">تفاصيل</button><button class="btn danger small" onclick="deleteReport(${r.id})">حذف</button></td></tr>`).join('');$('adminCourses').innerHTML=courses.map(c=>`<tr><td>${escapeHTML(c.title)}</td><td>${escapeHTML(c.date||'—')}</td><td>${c.enrollments.length} / ${c.seats}</td><td><button class="btn small" onclick="adminCourse(${c.id})">المشاركون</button><button class="btn danger small" onclick="deleteCourse(${c.id})">حذف</button></td></tr>`).join('');renderAdminHub();}
 function addCourse(){if(!isAdmin())return;const title=$('courseTitle').value.trim(),description=$('courseDesc').value.trim(),date=$('courseDate').value,duration=$('courseDuration').value.trim(),seats=Number($('courseSeats').value),level=$('courseLevel').value;if(!title||!description||!date||!duration||!seats||seats<1){$('courseMessage').textContent='يرجى تعبئة جميع بيانات الدورة.';return}courses.push({id:Date.now(),title,description,date,duration,seats,level,status:'متاحة',enrollments:[]});persist();updateAll();renderAdmin();$('courseTitle').value='';$('courseDesc').value='';$('courseDate').value='';$('courseDuration').value='';$('courseSeats').value=20;$('courseMessage').textContent='تمت إضافة الدورة بنجاح.';showToast('تمت إضافة الدورة بنجاح');}
 function adminCourse(id){if(!isAdmin())return;const c=courses.find(x=>x.id===id);if(!c)return;const rows=c.enrollments.map(e=>{const user=encodeURIComponent(e.username);let action='';if(e.completed)action='<span class="status done">اكتملت وصُدرت الشهادة</span>';else if(e.attended)action=`<button class="btn success small" onclick="completeCourse(${id},'${user}')">اعتماد الإتمام وإصدار الشهادة</button>`;else action='<span class="status">بانتظار تسجيل الحضور</span>';return `<tr><td>${escapeHTML(e.name)}</td><td>${escapeHTML(e.username)}</td><td>${e.attended?'<span class="status done">حاضر</span>':'<span class="status">لم يحضر</span>'}</td><td><button class="btn small ${e.attended?'secondary':'success'}" onclick="toggleAttendance(${id},'${user}')">${e.attended?'إلغاء الحضور':'تسجيل الحضور'}</button></td><td>${action}</td></tr>`}).join('');$('attendanceArea').innerHTML=`<div class="card"><h3>${escapeHTML(c.title)}</h3><p class="muted">عدد المسجلين: ${c.enrollments.length}</p><div class="table-wrap"><table><thead><tr><th>الاسم</th><th>المستخدم</th><th>الحضور</th><th>تغيير الحضور</th><th>إتمام الدورة</th></tr></thead><tbody>${rows||'<tr><td colspan="5">لا يوجد مسجلون في هذه الدورة.</td></tr>'}</tbody></table></div></div>`;$('attendanceArea').scrollIntoView({behavior:'smooth',block:'start'});}
 function toggleAttendance(id,encodedUser){if(!isAdmin())return;const username=decodeURIComponent(encodedUser),c=courses.find(x=>x.id===id);if(!c)return;const e=c.enrollments.find(x=>x.username===username);if(!e)return;if(e.completed&&!e.attended){alert('لا يمكن تغيير الحضور بعد إصدار الشهادة.');return}e.attended=!e.attended;persist();updateAll();renderAdmin();adminCourse(id);}
@@ -318,9 +358,4 @@ function renderHub(){if(!$('hubList'))return;const q=$('hubSearch').value.trim()
 function replyHubPost(id){if(!me()){showAuth();return}const p=hubPosts.find(x=>x.id===id);const el=$('reply'+id),text=el?.value.trim();if(!p||!text)return;p.replies=Array.isArray(p.replies)?p.replies:[];p.replies.push({author:me().username,authorName:me().name,text,date:new Date().toLocaleString('ar-SA')});if(p.author!==me().username)addNotification(p.author,'وصلك رد جديد على: '+p.title,p.id);if(p.type==='طلب مساعدة'&&p.status==='جديد')p.status='قيد المساعدة';persist();renderHub();showToast('تم إرسال ردك بنجاح');}
 function chooseBestReply(id,index){const p=hubPosts.find(x=>x.id===id);if(!p||!me()||p.author!==me().username)return;p.bestReply=index;p.status='تم حل المشكلة';const r=p.replies[index];if(r)addNotification(r.author,'تم اختيار ردك كأفضل إجابة في: '+p.title,p.id);persist();renderHub();renderProfileBadges();showToast('تم اعتماد أفضل إجابة وحل المشكلة 🏆');}
 function deleteHubPost(id){const p=hubPosts.find(x=>x.id===id);if(!p||(!isAdmin()&&p.author!==me().username))return;if(!confirm('هل تريد حذف هذه المشاركة؟'))return;hubPosts=hubPosts.filter(x=>x.id!==id);persist();renderHub();if(isAdmin())renderAdminHub();}
-function renderAdminHub(){if(!isAdmin())return;$('adminHubTable').innerHTML=hubPosts.length?hubPosts.map(p=>`<tr><td>${escapeHTML(p.title)}</td><td>${escapeHTML(p.type)}</td><td>${escapeHTML(p.authorName)}</td><td><select id="hubStatus${p.id}" onchange="updateHubStatus(${p.id},this.value)"><option ${p.status==='جديد'?'selected':''}>جديد</option><option ${p.status==='قيد المساعدة'?'selected':''}>قيد المساعدة</option><option ${p.status==='تم حل المشكلة'?'selected':''}>تم حل المشكلة</option><option ${p.status==='مقبول'?'selected':''}>مقبول</option><option ${p.status==='قيد التنفيذ'?'selected':''}>قيد التنفيذ</option><option ${p.status==='تم التنفيذ'?'selected':''}>تم التنفيذ</option><option ${p.status==='مرفوض'?'selected':''}>مرفوض</option></select></td><td><button class="btn danger small" onclick="deleteHubPost(${p.id})">حذف</button></td></tr>`).join(''):'<tr><td colspan="5">لا توجد مشاركات حتى الآن.</td></tr>';}
-function updateHubStatus(id,status){if(!isAdmin())return;const p=hubPosts.find(x=>x.id===id);if(!p)return;p.status=status;persist();renderAdminHub();renderHub();}
-function renderNotifications(){if(!me())return;const list=notifications.filter(n=>n.username===me().username);$('notificationList').innerHTML=list.length?list.map(n=>`<div class="notification-item ${n.read?'':'unread'}"><p>${escapeHTML(n.message)}</p><div class="meta"><span>${escapeHTML(n.date)}</span><span>${n.read?'مقروء':'جديد'}</span></div>${n.postId?`<button class="btn secondary small" onclick="go('developerHub');setHubTab('طلب مساعدة')">فتح المجتمع</button>`:''}</div>`).join(''):'<div class="empty">لا توجد إشعارات حتى الآن.</div>';}
-function markNotificationsRead(){if(!me())return;notifications.forEach(n=>{if(n.username===me().username)n.read=true});persist();renderNotifications();updateNotificationDot();}
-function updateNotificationDot(){const count=me()?notifications.filter(n=>n.username===me().username&&!n.read).length:0;$('notificationDot')?.classList.toggle('hidden',!count);}
-function renderSolutions(){if(!$('solutionList'))return;const q=$('solutionSearch').value.trim().toLowerCase(),items=[];hubPosts.forEach(p=>{if(p.bestReply!==null&&p.best
+function renderAdminHub(){if(!isAdmin())return;$('adminHubTable').innerHTML=hubPosts.length?hubPosts.map(p=>`<tr><td>${escapeHTML(p.title)}</td><td>${escapeHTML(p.type)}</td><td>${escapeHTML(p.authorName)}</td><td><select id="hubStatus${p.id}" onchange="updateHubStatus(${p.id},this.value)"><option ${p.status==='جديد'?'selected':''}>جديد</option><option ${p.status==='قيد المساعدة'?'selected':''}>قيد المساعدة</option><option ${p.status==='تم حل المشكلة'?'selected':''}>تم حل المشكلة</option><option ${p.status==='مقبول'?'selected':''}>مقبول</option><option ${p.status==='قيد التنفيذ'?'selected':''}>قيد التنفيذ</option><option ${p.status==='تم التنفيذ'?'selected':''}>تم ال
